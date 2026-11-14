@@ -9,11 +9,11 @@ const BreadcumbTen = () => {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="breadcumb-content">
-                            <h1 className="breadcumb-title">Service Details</h1>
+                            <h1 className="breadcumb-title">Detail Layanan</h1>
                             <ul className="breadcumb-menu item-decoration">
-                                <li><Link href="/pages/homepage/home-1"><i className="ri-home-4-fill"></i> HOME</Link></li>
-                                <li><Link href="/pages/innerpage/service">OUR SERVICE</Link></li>
-                                <li className="active">SERVICE DETAILS </li>
+                                <li><Link href="/"><i className="ri-home-4-fill"></i> BERANDA</Link></li>
+                                <li><Link href="/pages/innerpage/service">LAYANAN KAMI</Link></li>
+                                <li className="active">DETAIL LAYANAN</li>
                             </ul>
                         </div>
                     </div>

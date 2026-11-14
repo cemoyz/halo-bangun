@@ -1,12 +1,30 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { DEFAULT_LANDING_DATA } from "@/lib/landingContent";
 
 const FooterTwo = ({ data = undefined }) => {
-    const footerData = data || DEFAULT_LANDING_DATA.footer;
-    const waLink = footerData.whatsapp || `https://wa.me/62${(footerData.phone || '082135450404').replace(/^0/, '').replace(/[^0-9]/g, '')}`;
-    const socials = footerData.socials || DEFAULT_LANDING_DATA.footer.socials;
+    const [footerData, setFooterData] = useState(data || DEFAULT_LANDING_DATA.footer);
+
+    useEffect(() => {
+        if (data) {
+            setFooterData(data);
+            return;
+        }
+        fetch('/api/landing-content')
+            .then((res) => res.json())
+            .then((json) => {
+                if (json.success && json.data?.footer) {
+                    setFooterData(json.data.footer);
+                }
+            })
+            .catch(() => {});
+    }, [data]);
+
+    const activeFooter = footerData || DEFAULT_LANDING_DATA.footer;
+    const waLink = activeFooter.whatsapp || `https://wa.me/62${(activeFooter.phone || '082135450404').replace(/^0/, '').replace(/[^0-9]/g, '')}`;
+    const socials = activeFooter.socials || DEFAULT_LANDING_DATA.footer.socials;
 
     return (
         <div>
@@ -18,7 +36,7 @@ const FooterTwo = ({ data = undefined }) => {
                     <div className="footer-top-1">
                         <div className="footer-logo">
                             <Link href="/">
-                                <img src="/main-assets/img/logo-white.svg" alt={footerData.companyName || "Halo Bangun"} />
+                                <img src="/main-assets/img/logo-white.svg" alt={activeFooter.companyName || "Halo Bangun"} />
                             </Link>
                         </div>
                         <div className="subscribe-box">
@@ -32,7 +50,7 @@ const FooterTwo = ({ data = undefined }) => {
                                     placeholder="Masukkan email Anda..."
                                     required
                                 />
-                                <button type="submit" className="btn style2">
+                                <button type="submit" className="btn btn-footer-two style2">
                                     LANGGANAN<i className="ri-arrow-right-up-line"></i>
                                 </button>
                             </form>
@@ -42,13 +60,13 @@ const FooterTwo = ({ data = undefined }) => {
                         <div className="row justify-content-between">
                             <div className="col-md-6 col-xl-3">
                                 <div className="widget widget-about footer-widget">
-                                    <h3 className="widget_title">{footerData.companyName || "Halo Bangun"}</h3>
+                                    <h3 className="widget_title">{activeFooter.companyName || "Halo Bangun"}</h3>
                                     <p className="about-text">
-                                        {footerData.tagline || "Perusahaan jasa konstruksi, arsitektur, dan renovasi terpercaya dengan standar mutu SNI, garansi tertulis, serta monitoring proyek berbasis Kurva S dan live CCTV."}
+                                        {activeFooter.tagline || "Perusahaan jasa konstruksi, arsitektur, dan renovasi terpercaya dengan standar mutu SNI, garansi tertulis, serta monitoring proyek berbasis Kurva S dan live CCTV."}
                                     </p>
                                     <h5 className="about-subtitle">JAM OPERASIONAL</h5>
                                     <p className="about-text">
-                                        <span className="text-theme">{footerData.operationalHours || "Senin – Sabtu: 08:00 – 21:00 WIB"}</span>
+                                        <span className="text-theme">{activeFooter.operationalHours || "Senin – Sabtu: 08:00 – 21:00 WIB"}</span>
                                     </p>
                                 </div>
                             </div>
@@ -80,15 +98,15 @@ const FooterTwo = ({ data = undefined }) => {
                                 <div className="widget footer-widget widget-contact">
                                     <h3 className="widget_title">Kantor D.I. Yogyakarta</h3>
                                     <p className="contact-text">
-                                        {footerData.addressYogyakarta || "Jl. Palagan Tentara Pelajar Km. 9, Sleman, D.I. Yogyakarta"}
+                                        {activeFooter.addressYogyakarta || "Jl. Palagan Tentara Pelajar Km. 9, Sleman, D.I. Yogyakarta"}
                                     </p>
                                     <h3 className="widget_title" style={{ marginTop: '16px' }}>Kantor Jawa Barat</h3>
                                     <p className="footer-text">
-                                        {footerData.addressJawaBarat || "Jl. Raya Pajajaran No. 88, Bogor, Jawa Barat"}
+                                        {activeFooter.addressJawaBarat || "Jl. Raya Pajajaran No. 88, Bogor, Jawa Barat"}
                                     </p>
-                                    {footerData.email && (
+                                    {activeFooter.email && (
                                         <p className="footer-text" style={{ marginTop: '8px' }}>
-                                            <i className="ri-mail-line me-1"></i> {footerData.email}
+                                            <i className="ri-mail-line me-1"></i> {activeFooter.email}
                                         </p>
                                     )}
                                 </div>
@@ -98,7 +116,7 @@ const FooterTwo = ({ data = undefined }) => {
                                     <h3 className="widget_title">Kontak WhatsApp</h3>
                                     <p className="footer-text">
                                         <a href={waLink} target="_blank" rel="noopener noreferrer" style={{ color: '#22c55e', fontWeight: 700 }}>
-                                            <i className="ri-whatsapp-line me-1"></i>{footerData.phone || "0821-3545-0404"}
+                                            <i className="ri-whatsapp-line me-1"></i>{activeFooter.phone || "0821-3545-0404"}
                                         </a>
                                     </p>
                                     <h3 className="widget_title mt-3">Portal Klien</h3>
@@ -140,7 +158,7 @@ const FooterTwo = ({ data = undefined }) => {
                         <div className="row gy-3 justify-content-md-between justify-content-center">
                             <div className="col-auto align-self-center">
                                 <p className="copyright-text text-center">
-                                    {footerData.copyright || "© 2026 Halo Bangun. Seluruh Hak Cipta Dilindungi."}
+                                    {activeFooter.copyright || "© 2026 Halo Bangun. Seluruh Hak Cipta Dilindungi."}
                                 </p>
                             </div>
                             <div className="col-auto">
