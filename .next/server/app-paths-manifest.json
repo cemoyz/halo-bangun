@@ -1,0 +1,6 @@
+{
+  "/dashboard/client/page": "app/dashboard/client/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/dashboard/projects/page": "app/dashboard/projects/page.js",
+  "/pages/innerpage/blog/page": "app/pages/innerpage/blog/page.js"
+}

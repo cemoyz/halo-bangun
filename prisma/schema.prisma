@@ -1,0 +1,342 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  OWNER
+  FINANCE
+  PM
+  MANDOR
+  CLIENT
+}
+
+enum ProjectCategory {
+  ARSITEKTUR
+  PEMBANGUNAN
+  RENOVASI
+  PEMERINTAH
+}
+
+enum ProjectStatus {
+  ONGOING
+  COMPLETED
+}
+
+enum DocType {
+  SPKPR
+  DESAIN_ARS
+  RAB
+  RENCANA_KERJA
+  BAST
+  GARANSI
+}
+
+enum AddendumStatus {
+  PENDING_FINANCE
+  PENDING_CLIENT
+  APPROVED
+  REJECTED
+}
+
+enum EquipmentStatus {
+  MILIK_SENDIRI
+  SEWA
+}
+
+enum PaymentStatus {
+  UNPAID
+  PENDING_VERIFICATION
+  PAID
+}
+
+enum PortfolioCategory {
+  DESAIN_ARSITEKTUR
+  PEMBANGUNAN_RENOVASI
+  LEGALITAS_SEREMONIAL
+  KOLASE
+}
+
+enum ArticleStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  name         String
+  email        String    @unique
+  password     String
+  role         Role      @default(CLIENT)
+  phone        String?
+  avatar       String?   @default("/avatar.png")
+  designation  String?   // e.g. "Direktur Utama", "Finance Specialist", "Senior Project Manager", "Kepala Tukang Lapangan", "Klien Proyek"
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  // Relasi Proyek
+  clientProjects Project[] @relation("ClientProjects")
+  pmProjects     Project[] @relation("PmProjects")
+
+  // Relasi Operasional
+  dailyReports   DailyReport[]
+  payrolls       Payroll[]
+  authoredArticles Article[]
+  clientFeedbacks ClientFeedback[]
+
+  @@map("users")
+}
+
+model Project {
+  id                    Int             @id @default(autoincrement())
+  name                  String
+  category              ProjectCategory @default(PEMBANGUNAN)
+  location              String
+  client_id             Int?
+  pm_id                 Int?
+  status                ProjectStatus   @default(ONGOING)
+  contract_value        Float           @default(0)
+  cctv_url              String?
+  bast_unlocked         Boolean         @default(false)
+  startDate             DateTime?
+  targetCompletionDate  DateTime?
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  // Relasi Pengguna
+  client                User?           @relation("ClientProjects", fields: [client_id], references: [id], onDelete: SetNull)
+  pm                    User?           @relation("PmProjects", fields: [pm_id], references: [id], onDelete: SetNull)
+
+  // Sub-relasi Proyek
+  documents             ProjectDocument[]
+  dailyReports          DailyReport[]
+  sCurveProgress        SCurveProgress[]
+  addendums             Addendum[]
+  materialPurchases     MaterialPurchase[]
+  equipmentInventory    EquipmentInventory[]
+  payments              Payment[]
+  financialAllocation   ProjectFinancialAllocation?
+  payrolls              Payroll[]
+  feedbacks             ClientFeedback[]
+
+  @@map("projects")
+}
+
+model ProjectDocument {
+  id           Int      @id @default(autoincrement())
+  project_id   Int
+  doc_type     DocType
+  title        String?
+  file_url     String
+  is_locked    Boolean  @default(false)
+  uploaded_at  DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  project      Project  @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@map("project_documents")
+}
+
+model DailyReport {
+  id           Int      @id @default(autoincrement())
+  project_id   Int
+  date         DateTime
+  weather      String   // e.g. "Cerah", "Hujan Ringan", "Berawan"
+  worker_count Int      @default(0)
+  notes        String   @db.Text
+  photos       String[] // max 3 photos URL
+  created_by   Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  project      Project  @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  author       User     @relation(fields: [created_by], references: [id], onDelete: Cascade)
+
+  @@map("daily_reports")
+}
+
+model SCurveProgress {
+  id                 Int      @id @default(autoincrement())
+  project_id         Int
+  week_number        Int
+  planned_percentage Float    @default(0)
+  actual_percentage  Float    @default(0)
+  target_date        DateTime?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  project            Project  @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@unique([project_id, week_number])
+  @@map("s_curve_progress")
+}
+
+model Addendum {
+  id              Int            @id @default(autoincrement())
+  project_id      Int
+  description     String         @db.Text
+  cost_difference Float          @default(0) // nilai selisih biaya (+/-)
+  status          AddendumStatus @default(PENDING_FINANCE)
+  submitted_by    Int?
+  client_note     String?        @db.Text
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  project         Project        @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@map("addendums")
+}
+
+model MaterialPurchase {
+  id            Int      @id @default(autoincrement())
+  project_id    Int
+  item_name     String
+  quantity      String   // e.g. "50 Sak", "2 Truk Pasir"
+  store_name    String
+  store_wa      String?
+  total_price   Float    @default(0)
+  receipt_url   String?
+  input_by_role String   // "PM", "FINANCE", "MANDOR", "OWNER"
+  purchase_date DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  project       Project  @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@map("material_purchases")
+}
+
+model EquipmentInventory {
+  id              Int             @id @default(autoincrement())
+  project_id      Int?
+  item_name       String
+  status          EquipmentStatus @default(MILIK_SENDIRI)
+  rental_duration String?         // e.g. "14 Hari", "1 Bulan"
+  rental_cost     Float?          @default(0)
+  notes           String?         @db.Text
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  project         Project?        @relation(fields: [project_id], references: [id], onDelete: SetNull)
+
+  @@map("equipment_inventory")
+}
+
+model Payment {
+  id           Int           @id @default(autoincrement())
+  project_id   Int
+  termin_name  String        // e.g. "Termin 1 (DP 30%)", "Termin 2 (Struktur 30%)"
+  amount       Float         @default(0)
+  status       PaymentStatus @default(UNPAID)
+  due_date     DateTime?
+  paid_at      DateTime?
+  proof_url    String?
+  receipt_url  String?
+  notes        String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  project      Project       @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+model ProjectFinancialAllocation {
+  id                    Int      @id @default(autoincrement())
+  project_id            Int      @unique
+  real_cost             Float    @default(0) // total biaya riil belanja & upah
+  net_profit            Float    @default(0) // laba bersih
+  tax_amount            Float    @default(0) // alokasi pajak
+  zakat_amount          Float    @default(0) // zakat perusahaan
+  operational_amount    Float    @default(0) // operasional kantor
+  mitigation_fund       Float    @default(0) // dana mitigasi
+  business_dev_fund     Float    @default(0) // dana pengembangan usaha
+  debt_receivable_notes String?  @db.Text    // catatan hutang / piutang
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  project               Project  @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@map("project_financial_allocations")
+}
+
+model Payroll {
+  id                    Int      @id @default(autoincrement())
+  user_id               Int
+  project_id            Int?
+  period                String   // e.g. "November 2026"
+  base_salary           Float    @default(0)
+  operational_allowance Float    @default(0)
+  bonus                 Float    @default(0)
+  total_amount          Float    @default(0)
+  slip_url              String?
+  status                String   @default("PAID")
+  paid_date             DateTime @default(now())
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  user                  User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  project               Project? @relation(fields: [project_id], references: [id], onDelete: SetNull)
+
+  @@map("payrolls")
+}
+
+model Portfolio {
+  id           Int               @id @default(autoincrement())
+  title        String
+  slug         String            @unique
+  category     PortfolioCategory @default(DESAIN_ARSITEKTUR)
+  subcategory  String?           // e.g. "Rumah Tinggal", "Café", "Kosan", "Asrama", "Ruko", "Pemerintah"
+  client_name  String?
+  location     String?
+  image_url    String
+  gallery_urls String[]
+  description  String?           @db.Text
+  is_featured  Boolean           @default(false)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  @@map("portfolios")
+}
+
+model Article {
+  id           Int           @id @default(autoincrement())
+  title        String
+  slug         String        @unique
+  excerpt      String?       @db.Text
+  content      String        @db.Text
+  cover_image  String?
+  category     String?       @default("Edukasi Konstruksi")
+  author_id    Int?
+  status       ArticleStatus @default(PUBLISHED)
+  views        Int           @default(0)
+  published_at DateTime      @default(now())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  author       User?         @relation(fields: [author_id], references: [id], onDelete: SetNull)
+
+  @@map("articles")
+}
+
+model ClientFeedback {
+  id         Int      @id @default(autoincrement())
+  project_id Int
+  client_id  Int
+  subject    String
+  message    String   @db.Text
+  status     String   @default("OPEN") // OPEN, RESOLVED
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  project    Project  @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  client     User     @relation(fields: [client_id], references: [id], onDelete: Cascade)
+
+  @@map("client_feedbacks")
+}
+

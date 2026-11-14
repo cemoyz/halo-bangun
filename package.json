@@ -1,0 +1,53 @@
+{
+  "name": "server-version",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "seed": "node prisma/seed.js"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "@prisma/client": "6.4.1",
+    "@sekmet/react-magnific-popup": "^1.0.2",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cookie": "^0.6.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "bcryptjs": "^3.0.3",
+    "bootstrap": "^5.3.3",
+    "cookie": "^2.0.2",
+    "imagesloaded": "^5.0.0",
+    "isotope-layout": "^3.0.6",
+    "jsonwebtoken": "^9.0.3",
+    "lucide-react": "^1.73.0",
+    "magnific-popup": "^1.2.0",
+    "next": "^14.2.5",
+    "rc-slider": "^10.6.2",
+    "react": "^18",
+    "react-bootstrap": "^2.10.3",
+    "react-countup": "^6.5.3",
+    "react-dom": "^18",
+    "react-image-lightbox": "^5.1.4",
+    "react-intersection-observer": "^9.10.3",
+    "react-magnific-popup": "^1.0.1",
+    "react-nice-select": "^1.0.6",
+    "react-responsive-modal": "^6.4.2",
+    "react-slick": "^0.30.2",
+    "recharts": "^3.10.1",
+    "slick-carousel": "^1.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "@types/react": "^18.3.12",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.4",
+    "jose": "^6.2.17",
+    "prisma": "6.4.1",
+    "typescript": "^5.6.3"
+  }
+}
