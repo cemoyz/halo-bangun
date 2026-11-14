@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Card, CardHeader, CardTitle, CardContent, Button, Badge } from '@/components/dashboard/ui';
 import { formatSafeImageUrl } from '@/lib/imgbb';
 import { SCurveChart } from '@/components/dashboard/SCurveChart';
@@ -26,9 +27,12 @@ interface Project {
 
 interface Props {
   project: Project;
+  allProjects?: Array<{ id: number; name: string; location: string; status: string }>;
+  userRole?: string;
 }
 
-export default function ClientDashboardConsole({ project }: Props) {
+export default function ClientDashboardConsole({ project, allProjects = [], userRole }: Props) {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<'monitor' | 'documents' | 'termin' | 'addendums' | 'feedback'>('monitor');
 
   const [payments, setPayments] = useState(project.payments);
@@ -171,6 +175,64 @@ export default function ClientDashboardConsole({ project }: Props) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      {/* Project Switcher Bar if Multiple Projects */}
+      {allProjects && allProjects.length > 1 && (
+        <div
+          style={{
+            background: 'var(--dash-card-bg)',
+            border: '1px solid var(--dash-border)',
+            padding: '14px 20px',
+            borderRadius: '12px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '12px',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span style={{ fontSize: '18px', color: '#f97316' }}>
+              <i className="ri-folder-shared-line" />
+            </span>
+            <div>
+              <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--dash-text-main)' }}>
+                Pilih Proyek Aktif {userRole === 'OWNER' && '(Mode Pratinjau Owner)'}
+              </div>
+              <div style={{ fontSize: '11px', color: 'var(--dash-text-muted)' }}>
+                Anda memiliki akses pemantauan untuk {allProjects.length} proyek di database Halo Bangun
+              </div>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <select
+              value={project.id}
+              onChange={(e) => {
+                const newId = e.target.value;
+                router.push(`/dashboard/client?projectId=${newId}`);
+              }}
+              style={{
+                background: 'var(--dash-bg)',
+                color: 'var(--dash-text-main)',
+                border: '1px solid var(--dash-border)',
+                borderRadius: '8px',
+                padding: '8px 14px',
+                fontSize: '13px',
+                fontWeight: 600,
+                outline: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              {allProjects.map((p) => (
+                <option key={p.id} value={p.id}>
+                  #{p.id} - {p.name} ({p.status})
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      )}
+
       {/* Alert Banner */}
       {statusMsg && (
         <div

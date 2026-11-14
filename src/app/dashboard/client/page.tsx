@@ -9,7 +9,9 @@ import ClientDashboardConsole from '@/components/dashboard/ClientDashboardConsol
 
 export const dynamic = 'force-dynamic';
 
-export default async function ClientDashboardPage() {
+export default async function ClientDashboardPage(props: {
+  searchParams?: Promise<{ projectId?: string }>;
+}) {
   const cookieStore = await cookies();
   const token = cookieStore.get(COOKIE_NAME)?.value;
   const user = token ? await verifyToken(token) : null;
@@ -19,9 +21,23 @@ export default async function ClientDashboardPage() {
     redirect('/dashboard?forbidden=1');
   }
 
-  // Find project for this client (or first project if Owner)
-  const project = await prisma.project.findFirst({
+  const resolvedParams = props.searchParams ? await props.searchParams : {};
+  const requestedId = resolvedParams.projectId ? parseInt(resolvedParams.projectId, 10) : undefined;
+
+  // Find all accessible projects for this client (or all projects if Owner)
+  const clientProjects = await prisma.project.findMany({
     where: user.role === 'CLIENT' ? { client_id: user.id } : {},
+    select: { id: true, name: true, location: true, status: true, contract_value: true },
+    orderBy: { id: 'desc' },
+  });
+
+  const targetProjectId = requestedId && clientProjects.some(p => p.id === requestedId)
+    ? requestedId
+    : (clientProjects[0]?.id || undefined);
+
+  // Find targeted project details
+  const project = targetProjectId ? await prisma.project.findUnique({
+    where: { id: targetProjectId },
     include: {
       pm: { select: { name: true, phone: true } },
       documents: {
@@ -73,7 +89,7 @@ export default async function ClientDashboardPage() {
         orderBy: { createdAt: 'desc' },
       },
     },
-  });
+  }) : null;
 
   if (!project) {
     return (
@@ -130,7 +146,11 @@ export default async function ClientDashboardPage() {
         subtitle={`Lokasi: ${project.location} • Pengawas Lapangan: ${project.pm?.name || 'Senior PM Halo Bangun'} (${project.pm?.phone || '0821-3545-0404'})`}
       />
 
-      <ClientDashboardConsole project={serializedProject as any} />
+      <ClientDashboardConsole 
+        project={serializedProject as any} 
+        allProjects={clientProjects}
+        userRole={user.role}
+      />
     </DashboardLayout>
   );
 }

@@ -24,14 +24,27 @@ export default function PaymentsPage() {
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // Load user
+  // Load user from Supabase auth session
   useEffect(() => {
-    try {
-      const stored = sessionStorage.getItem('dash_user');
-      if (stored) {
-        setCurrentUser(JSON.parse(stored));
+    async function loadAuthUser() {
+      try {
+        const res = await fetch('/api/auth/me');
+        const json = await res.json();
+        if (json.success && json.user) {
+          setCurrentUser(json.user);
+          return;
+        }
+      } catch (e) {
+        console.warn('Failed to fetch auth session:', e);
       }
-    } catch (e) {}
+      try {
+        const stored = sessionStorage.getItem('dash_user');
+        if (stored) {
+          setCurrentUser(JSON.parse(stored));
+        }
+      } catch (e) {}
+    }
+    loadAuthUser();
   }, []);
 
   const fetchPayments = async (projId?: number) => {
