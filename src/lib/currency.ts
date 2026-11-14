@@ -1,13 +1,23 @@
-export function formatIDR(amount: number): string {
+export function formatIDR(amount: number | string | null | undefined): string {
+  if (amount === null || amount === undefined || amount === '') return 'Rp 0';
+  const num = typeof amount === 'number' ? amount : Number(amount);
+  if (isNaN(num) || !isFinite(num)) return 'Rp 0';
   return new Intl.NumberFormat('id-ID', {
     style: 'currency',
     currency: 'IDR',
     maximumFractionDigits: 0,
-  }).format(amount);
+  }).format(num);
 }
 
-export function terbilang(angka: number): string {
-  const bilangan = Math.floor(Math.abs(angka));
+export function terbilang(angka: number | string | null | undefined): string {
+  if (angka === null || angka === undefined || angka === '') return 'Nol Rupiah';
+  const num = typeof angka === 'number' ? angka : Number(angka);
+  if (isNaN(num) || !isFinite(num)) return 'Nol Rupiah';
+
+  const isNegatif = num < 0;
+  const bilangan = Math.floor(Math.abs(num));
+  if (bilangan === 0) return 'Nol Rupiah';
+
   const kata = [
     '',
     'Satu',
@@ -47,7 +57,7 @@ export function terbilang(angka: number): string {
     }
   }
 
-  if (bilangan === 0) return 'Nol Rupiah';
   const hasil = konversi(bilangan).replace(/\s+/g, ' ').trim();
-  return hasil + ' Rupiah';
+  const prefix = isNegatif ? 'Minus ' : '';
+  return prefix + hasil + ' Rupiah';
 }

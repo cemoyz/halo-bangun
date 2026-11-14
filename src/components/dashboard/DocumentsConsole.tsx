@@ -108,11 +108,27 @@ export default function DocumentsConsole({
     socialFund: 20000,
   });
 
-  const selectedProject = projects.find((p) => p.id === selectedProjectId) || projects[0];
-  const projectClaims = warrantyClaims.filter((c) => c.project_id === selectedProjectId);
+  const fallbackProject: Project = {
+    id: 1,
+    name: 'Proyek Halo Bangun',
+    category: 'Konstruksi',
+    location: 'Sleman, D.I. Yogyakarta',
+    contract_value: 0,
+    status: 'ONGOING',
+    bast_unlocked: false,
+    client: { id: 1, name: 'Klien Terdaftar', email: 'klien@halobangun.id' },
+    warrantyClaims: [],
+  };
+
+  const selectedProject = (projects && projects.length > 0)
+    ? (projects.find((p) => p.id === selectedProjectId) || projects[0])
+    : fallbackProject;
+  const projectClaims = warrantyClaims.filter((c) => c.project_id === (selectedProject?.id || selectedProjectId));
 
   // Current selected payroll item
-  const currentPayroll = payrolls.find((p) => p.id === selectedPayrollId) || payrolls[0];
+  const currentPayroll = (payrolls && payrolls.length > 0)
+    ? (payrolls.find((p) => p.id === selectedPayrollId) || payrolls[0])
+    : null;
 
   // Calculate slip totals
   const totalEarnings =
@@ -1250,7 +1266,7 @@ export default function DocumentsConsole({
               >
                 {payrolls.map((p) => (
                   <option key={p.id} value={p.id}>
-                    {p.user.name} ({p.user.role}) — {p.period} ({formatIDR(p.total_amount)})
+                    {p.user?.name || 'Karyawan'} ({p.user?.role || '-'}) — {p.period} ({formatIDR(p.total_amount)})
                   </option>
                 ))}
               </select>

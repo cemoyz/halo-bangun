@@ -51,14 +51,15 @@ export default function DocumentsPage() {
           </div>
         ) : (
           <DocumentsConsole
-            projects={data.projects || []}
-            payrolls={data.payrolls || []}
-            employees={data.employees || []}
-            userRole={data.currentUserRole}
-            currentUserId={data.currentUserId}
+            projects={data?.projects || []}
+            payrolls={data?.payrolls || []}
+            employees={data?.employees || []}
+            userRole={data?.currentUserRole || 'OWNER'}
+            currentUserId={data?.currentUserId || 1}
           />
         )}
       </div>
     </DashboardLayout>
   );
 }
+
