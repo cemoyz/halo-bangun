@@ -28,11 +28,11 @@ const TestimonialTwo = () => {
         <div className="row justify-content-between">
           <div className="col-lg-7 testimonial-extra-padding">
             <div className="title-area text-lg-start text-center services-title-area testimonial-area-bottom-space-row content-text-extra-style service-testimonial-align">
-              <span class="sub-title">
+              <span className="sub-title">
                 <img src="/main-assets/img/icon/section-subtitle-icon.svg" alt="" />
                 Testimonials
               </span>
-              <h2 class="sec-title">What client saying about us</h2>
+              <h2 className="sec-title">What client saying about us</h2>
             </div>
           </div>
           <div className="col-lg-auto">

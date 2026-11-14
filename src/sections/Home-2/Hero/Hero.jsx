@@ -226,7 +226,7 @@ const Hero = () => {
             </div>
           </div>
         </Slider>
-        <div class="container">
+        <div className="container">
           <Slider
             {...settingsTwo}
             asNavFor={nav1}

@@ -23,9 +23,9 @@ const AboutThree = () => {
                   />
                 </div>
                 <h3 className="about-counter-number">
-                  <span className="counter-number"><CountUp start={0} end={40} /></span>+
+                  <span className="counter-number"><CountUp start={0} end={10} /></span>+
                 </h3>
-                <p className="about-counter-text">Business Experience</p>
+                <p className="about-counter-text">Tahun Dedikasi</p>
               </div>
             </div>
           </div>
@@ -33,25 +33,24 @@ const AboutThree = () => {
             <div className="title-area mb-25">
               <span className="sub-title">
                 <img src="/main-assets/img/icon/section-subtitle-icon.svg" alt="img" />
-                ABOUT US
+                TENTANG HALO BANGUN
               </span>
               <h2 className="sec-title">
-                WE BUILDING EVERYTHING THAT YOU NEEDED
+                MEMBANGUN DENGAN TRANSPARANSI & STANDAR KUALITAS SNI
               </h2>
               <p className="sec-text">
-                We craft unique digital experiences. With more than 7 years of
-                expertise we design and code clean websites.
+                Halo Bangun adalah perusahaan jasa arsitektur, konstruksi, dan renovasi modern. Kami hadir untuk menyelesaikan persoalan klasik industri bangunan dengan memberikan jaminan transparansi anggaran, laporan progres Kurva S berkala, hingga integrasi live monitor CCTV.
               </p>
             </div>
             <div className="checklist mb-35">
               <ul>
                 <li>
                   <img src="/main-assets/img/icon/about-checklsit-icon1-1.svg" alt="img" />
-                  Providing Solutions For Construction, Management
+                  RAB Mengikat & Transparan Tanpa Biaya Tersembunyi
                 </li>
                 <li>
                   <img src="/main-assets/img/icon/about-checklsit-icon1-1.svg" alt="img" />
-                  Engineers design and build the structure
+                  Garansi Struktur Tertulis & Pemantauan Proyek Real-Time
                 </li>
               </ul>
             </div>
@@ -60,10 +59,9 @@ const AboutThree = () => {
                 <img src="/main-assets/img/icon/about-grid-icon1-1.svg" alt="img" />
               </div>
               <div className="about-grid-details">
-                <h4 className="title">Our Mission</h4>
+                <h4 className="title">Misi Kami</h4>
                 <p className="text">
-                  We craft unique digital experiences. With more years of
-                  expertise we design
+                  Memberikan hasil rancang bangun berkualitas tinggi, tepat anggaran, dan tepat waktu dengan tata kelola digital yang akuntabel.
                 </p>
               </div>
             </div>
@@ -72,16 +70,15 @@ const AboutThree = () => {
                 <img src="/main-assets/img/icon/about-grid-icon1-2.svg" alt="img" />
               </div>
               <div className="about-grid-details">
-                <h4 className="title">Our Vision</h4>
+                <h4 className="title">Visi Kami</h4>
                 <p className="text">
-                  We craft unique digital experiences. With more years of
-                  expertise we design
+                  Menjadi pelopor kontraktor terpercaya di Indonesia yang menggabungkan estetika arsitektur dan kepastian finansial bagi klien.
                 </p>
               </div>
             </div>
             <div className="btn-group mt-60">
-              <Link href="/pages/innerpage/about" className="btn style3">
-                Explore Our Company <i className="ri-arrow-right-up-line"></i>
+              <Link href="https://wa.me/6282135450404" target="_blank" className="btn style3">
+                KONSULTASI SEKARANG <i className="ri-arrow-right-up-line"></i>
               </Link>
             </div>
           </div>

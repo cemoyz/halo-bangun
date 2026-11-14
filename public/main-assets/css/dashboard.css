@@ -1338,4 +1338,20 @@ button.dash-btn-danger {
 .fa-external-link:before, .fa-external-link-alt:before { content: "\f08e"; }
 .fa-sign-out:before, .fa-sign-out-alt:before { content: "\f08b"; }
 
+/* ============================================================
+   Desktop Sidebar Robust Positioning & Offsets
+   ============================================================ */
+@media (min-width: 992px) {
+  .dash-sidebar-desktop {
+    transform: none !important;
+    position: fixed !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    display: flex !important;
+    z-index: 999 !important;
+  }
+}
+
+
 

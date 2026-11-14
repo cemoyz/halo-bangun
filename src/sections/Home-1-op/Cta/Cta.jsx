@@ -54,8 +54,9 @@ const Cta = () => {
                         name="subject"
                         id="subject"
                         className="single-select nice-select form-select"
+                        defaultValue=""
                       >
-                        <option value="" disabled selected hidden>
+                        <option value="" disabled hidden>
                           Your Inquiry
                         </option>
                         <option value="Web Design">Web Design</option>

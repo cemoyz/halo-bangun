@@ -8,17 +8,48 @@ import 'slick-carousel/slick/slick.css'; // Slick Carousel styles
 import 'slick-carousel/slick/slick-theme.css'; // Slick Carousel theme styles
 import Link from 'next/link';
 
-const images = [
-  "/main-assets/img/project/project1_1.png",
-  "/main-assets/img/project/project1_2.png",
-  "/main-assets/img/project/project1_3.png",
-  "/main-assets/img/project/project1_1.png",
-  "/main-assets/img/project/project1_2.png",
-  "/main-assets/img/project/project1_3.png",
+const projectItems = [
+  {
+    image: "/main-assets/img/project/project1_1.png",
+    category: "Pembangunan Rumah",
+    title: "Rumah Ibu Theresia - Sleman",
+    date: "Progres 82% (On Track)",
+  },
+  {
+    image: "/main-assets/img/project/project1_2.png",
+    category: "Desain Arsitektur",
+    title: "Ndalem Sukoharjo 1 & 2",
+    date: "Konsep Japandi Javanese",
+  },
+  {
+    image: "/main-assets/img/project/project1_3.png",
+    category: "Renovasi Komersial",
+    title: "Café Mas Reza Sambilegi",
+    date: "Progres 78% (Finishing)",
+  },
+  {
+    image: "/main-assets/img/project/project1_1.png",
+    category: "Desain Arsitektur",
+    title: "Asrama Mahasiswa Sumbawa Barat",
+    date: "Perencanaan Fasilitas Publik",
+  },
+  {
+    image: "/main-assets/img/project/project1_2.png",
+    category: "Pembangunan Baru",
+    title: "Kosan Eksklusif UMY Pak Fadli",
+    date: "Hunian Mahasiswa Modern",
+  },
+  {
+    image: "/main-assets/img/project/project1_3.png",
+    category: "Masterplan Publik",
+    title: "Penataan Kawasan XT Square",
+    date: "Pemerintah Kota Yogyakarta",
+  },
 ];
 
 const Portfolio = () => {
   const [photoIndex, setPhotoIndex] = useState(-1);
+  const images = projectItems.map(p => p.image);
 
   useEffect(() => {
     if (photoIndex >= 0) {
@@ -72,37 +103,37 @@ const Portfolio = () => {
       <div className="container">
         <div className="title-area text-center">
           <span className="sub-title">
-            <img src="/main-assets/img/icon/section-subtitle-icon.svg" alt="img" /> Recent Work
+            <img src="/main-assets/img/icon/section-subtitle-icon.svg" alt="img" /> Portofolio Pilihan
           </span>
-          <h2 className="sec-title">Check our latest projects</h2>
-          <p className="sec-text">We are the best construction agency in the world</p>
+          <h2 className="sec-title">Karya & Dokumentasi Proyek Nyata</h2>
+          <p className="sec-text">Eksplorasi portofolio desain arsitektur, pembangunan baru, dan renovasi Halo Bangun di D.I. Yogyakarta, Jateng & Jabar.</p>
         </div>
         <div className="portfolio-slider1 overflow-hidden">
           <Slider {...settings}>
-            {images.map((image, index) => (
+            {projectItems.map((item, index) => (
               <div key={index}>
                 <div className="portfolio-card" style={{ margin: "0px 1rem" }}>
                   <div className="portfolio-card-thumb">
-                    <img src={image} alt={`Project ${index + 1}`} />
+                    <img src={item.image} alt={item.title} />
                     <button className="icon-btn popup-image" onClick={() => handleOpen(index)}>
                       <i className="ri-eye-line"></i>
                     </button>
                   </div>
                   <div className="portfolio-card-details">
                     <div className="media-left">
-                      <span className="portfolio-card-subtitle">Building</span>
+                      <span className="portfolio-card-subtitle">{item.category}</span>
                       <h4 className="portfolio-card-title">
-                        <Link href="/pages/innerpage/project-details">
-                          General Construction
+                        <Link href="/portfolio">
+                          {item.title}
                         </Link>
                       </h4>
                       <p className="portofolio-card-text">
-                        Building since 09,01,2024
+                        {item.date}
                       </p>
                     </div>
                   </div>
-                  <Link href="/pages/innerpage/project-details" className="btn">
-                    Explore Service <i className="ri-arrow-right-up-line"></i>
+                  <Link href="/portfolio" className="btn">
+                    Lihat Portofolio <i className="ri-arrow-right-up-line"></i>
                   </Link>
                 </div>
               </div>

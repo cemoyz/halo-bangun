@@ -6,7 +6,7 @@ import { Role } from '@/lib/rbac';
 
 export async function GET() {
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const token = cookieStore.get(COOKIE_NAME)?.value;
 
     if (!token) {

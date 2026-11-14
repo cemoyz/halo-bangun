@@ -13,15 +13,15 @@ const TeamThree = () => {
             <div className="title-area content-text-extra-style">
               <span className="sub-title">
                 <img src="/main-assets/img/icon/section-subtitle-icon.svg" alt="img" />
-                Our Team
+                Tim Profesional
               </span>
-              <h2 className="sec-title">Meet our leadership</h2>
+              <h2 className="sec-title">Pimpinan & Tenaga Ahli Halo Bangun</h2>
             </div>
           </div>
           <div className="col-md-auto">
             <div className="sec-btn">
-              <Link href="/pages/innerpage/about" className="btn">
-                View All Members <i className="ri-arrow-right-up-line"></i>
+              <Link href="https://wa.me/6282135450404" target="_blank" className="btn">
+                Konsultasi dengan Tim <i className="ri-arrow-right-up-line"></i>
               </Link>
             </div>
           </div>
@@ -35,19 +35,19 @@ const TeamThree = () => {
             >
               <div className="team-card_content max-width-reset-team">
                 <h4 className="team-card_title">
-                  <Link href="/pages/innerpage/team-details">Penelopa Miller</Link>
+                  <Link href="https://wa.me/6282135450404" target="_blank">Ir. Arga Pramudya, S.T.</Link>
                 </h4>
-                <span className="team-card_desig">Head of Production</span>
+                <span className="team-card_desig">Direktur Utama / Founder</span>
                 <div className="team-social_wrap">
                   <div className="social-btn">
-                    <Link href="https://facebook.com/">
+                    <Link href="https://facebook.com/halobangun">
                       <i className="ri-facebook-fill"></i>
                     </Link>
-                    <Link href="https://www.twitter.com/">
-                      <i className="ri-twitter-x-line"></i>
-                    </Link>
-                    <Link href="https://instagram.com/">
+                    <Link href="https://instagram.com/halobangun">
                       <i className="ri-instagram-line"></i>
+                    </Link>
+                    <Link href="https://linkedin.com/company/halobangun">
+                      <i className="ri-linkedin-fill"></i>
                     </Link>
                   </div>
                 </div>
@@ -55,10 +55,10 @@ const TeamThree = () => {
               <div className="team-card_img team-card-white-space-none">
                 <img src="/main-assets/img/team/team-1-1.png" alt="img" />
               </div>
-              <Link href="tel:0023745671379" className="contact-btn-wrap">
-                <span className="number">(+00) 347 456 1379</span>
+              <Link href="https://wa.me/6282135450404" target="_blank" className="contact-btn-wrap">
+                <span className="number">0821-3545-0404</span>
                 <div className="icon-btn">
-                  <i className="ri-phone-fill"></i>
+                  <i className="ri-whatsapp-fill"></i>
                 </div>
               </Link>
             </div>
@@ -70,19 +70,19 @@ const TeamThree = () => {
             >
               <div className="team-card_content max-width-reset-team">
                 <h4 className="team-card_title">
-                  <Link href="/pages/innerpage/team-details">Mark Ronaldo</Link>
+                  <Link href="https://wa.me/6282135450404" target="_blank">Dimas Pratama, S.T.</Link>
                 </h4>
-                <span className="team-card_desig">Sr. Engineer</span>
+                <span className="team-card_desig">Senior Project Manager</span>
                 <div className="team-social_wrap">
                   <div className="social-btn">
-                    <Link href="https://facebook.com/">
+                    <Link href="https://facebook.com/halobangun">
                       <i className="ri-facebook-fill"></i>
                     </Link>
-                    <Link href="https://www.twitter.com/">
-                      <i className="ri-twitter-x-line"></i>
-                    </Link>
-                    <Link href="https://instagram.com/">
+                    <Link href="https://instagram.com/halobangun">
                       <i className="ri-instagram-line"></i>
+                    </Link>
+                    <Link href="https://linkedin.com/company/halobangun">
+                      <i className="ri-linkedin-fill"></i>
                     </Link>
                   </div>
                 </div>
@@ -90,10 +90,10 @@ const TeamThree = () => {
               <div className="team-card_img team-card-white-space-none">
                 <img src="/main-assets/img/team/team-1-2.png" alt="img" />
               </div>
-              <Link href="tel:0023745671379" className="contact-btn-wrap">
-                <span className="number">(+00) 347 456 1379</span>
+              <Link href="https://wa.me/6282135450404" target="_blank" className="contact-btn-wrap">
+                <span className="number">0821-3545-0404</span>
                 <div className="icon-btn">
-                  <i className="ri-phone-fill"></i>
+                  <i className="ri-whatsapp-fill"></i>
                 </div>
               </Link>
             </div>
@@ -105,19 +105,19 @@ const TeamThree = () => {
             >
               <div className="team-card_content max-width-reset-team">
                 <h4 className="team-card_title">
-                  <Link href="/pages/innerpage/team-details">John Maxwell</Link>
+                  <Link href="https://wa.me/6282135450404" target="_blank">Ratna Dewi, S.E.</Link>
                 </h4>
-                <span className="team-card_desig">Project Management</span>
+                <span className="team-card_desig">Head of Finance & Legal</span>
                 <div className="team-social_wrap">
                   <div className="social-btn">
-                    <Link href="https://facebook.com/">
+                    <Link href="https://facebook.com/halobangun">
                       <i className="ri-facebook-fill"></i>
                     </Link>
-                    <Link href="https://www.twitter.com/">
-                      <i className="ri-twitter-x-line"></i>
-                    </Link>
-                    <Link href="https://instagram.com/">
+                    <Link href="https://instagram.com/halobangun">
                       <i className="ri-instagram-line"></i>
+                    </Link>
+                    <Link href="https://linkedin.com/company/halobangun">
+                      <i className="ri-linkedin-fill"></i>
                     </Link>
                   </div>
                 </div>
@@ -125,10 +125,10 @@ const TeamThree = () => {
               <div className="team-card_img team-card-white-space-none">
                 <img src="/main-assets/img/team/team-1-3.png" alt="img" />
               </div>
-              <Link href="tel:0023745671379" className="contact-btn-wrap">
-                <span className="number">(+00) 347 456 1379</span>
+              <Link href="https://wa.me/6282135450404" target="_blank" className="contact-btn-wrap">
+                <span className="number">0821-3545-0404</span>
                 <div className="icon-btn">
-                  <i className="ri-phone-fill"></i>
+                  <i className="ri-whatsapp-fill"></i>
                 </div>
               </Link>
             </div>

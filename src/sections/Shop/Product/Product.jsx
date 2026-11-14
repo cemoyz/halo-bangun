@@ -66,8 +66,9 @@ const Product = () => {
                                                     name="orderby"
                                                     className="single-select orderby"
                                                     aria-label="Shop order"
+                                                    defaultValue="menu_order"
                                                 >
-                                                    <option value="menu_order" selected="selected">
+                                                    <option value="menu_order">
                                                         Default Sorting
                                                     </option>
                                                     <option value="popularity">Sort by popularity</option>

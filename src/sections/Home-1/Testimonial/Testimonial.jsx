@@ -3,8 +3,14 @@
 import Link from "next/link";
 import { useRef } from "react";
 import Slider from "react-slick";
+import { DEFAULT_LANDING_DATA } from "@/lib/landingContent";
 
-const Testimonial = () => {
+const Testimonial = ({ data }) => {
+    const testiData = data || DEFAULT_LANDING_DATA.testimonials;
+    const items = Array.isArray(testiData.items) && testiData.items.length > 0
+        ? testiData.items
+        : DEFAULT_LANDING_DATA.testimonials.items;
+
     const settings = {
         dots: false,
         infinite: true,
@@ -30,6 +36,12 @@ const Testimonial = () => {
         }
     };
 
+    const defaultAvatars = [
+        '/main-assets/img/testimonial/testi_1_1.png',
+        '/main-assets/img/testimonial/testi_1_2.png',
+        '/main-assets/img/testimonial/testi_1_3.png',
+    ];
+
     return (
         <div
             className="testimonial-area-1 home-one-testimonial overflow-hidden space bg-smoke shape-mockup-wrap background-image"
@@ -47,9 +59,10 @@ const Testimonial = () => {
                         <div className="title-area">
                             <span className="sub-title">
                                 <img src="/main-assets/img/icon/section-subtitle-icon.svg" alt="img" />
-                                Testimonials
+                                {testiData.badge || 'Testimoni Klien'}
                             </span>
-                            <h2 className="sec-title">Our happy customers</h2>
+                            <h2 className="sec-title">{testiData.title || 'Apa Kata Klien Halo Bangun'}</h2>
+                            {testiData.subtitle && <p style={{ color: '#64748b', marginTop: '6px' }}>{testiData.subtitle}</p>}
                         </div>
 
                         <Slider
@@ -58,80 +71,42 @@ const Testimonial = () => {
                             data-slide-show="1"
                             ref={sliderRef}
                         >
-                            <div className="col-lg-6">
-                                <div className="testi-card">
-                                    <div className="quote-icon">
-                                        <img src="/main-assets/img/icon/quote.svg" alt="img" />
-                                    </div>
-                                    <div className="testi-card-thumb">
-                                        <img src="/main-assets/img/testimonial/testi_1_1.png" alt="img" />
-                                    </div>
-                                    <div className="testi-card_content">
-                                        <h4 className="testi-card_title">Best Company!</h4>
-                                        <p className="testi-card_text">
-                                            Tortor posuere ac ut consequat. Tellusi elem isis etum sag
-                                            ittis vitae et leo duis ut diam. Odio ut sem nulla phar.
-                                            Purus sit ame nus mas do eiusmod.
-                                        </p>
-                                        <div className="testi-card-profile">
-                                            <h4 className="testi-profile-title">Aleesha brown.</h4>
-                                            <span className="testi-profile-desig">
-                                                CEO at Construz
-                                            </span>
+                            {items.map((item, idx) => {
+                                const avatarSrc = item.avatar || defaultAvatars[idx % defaultAvatars.length];
+                                return (
+                                    <div className="col-lg-6" key={idx}>
+                                        <div className="testi-card">
+                                            <div className="quote-icon">
+                                                <img src="/main-assets/img/icon/quote.svg" alt="img" />
+                                            </div>
+                                            <div className="testi-card-thumb">
+                                                <img
+                                                    src={avatarSrc}
+                                                    alt={item.name}
+                                                    style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover' }}
+                                                />
+                                            </div>
+                                            <div className="testi-card_content">
+                                                <div style={{ display: 'flex', gap: '4px', marginBottom: '8px' }}>
+                                                    {Array.from({ length: item.rating || 5 }).map((_, starIdx) => (
+                                                        <i key={starIdx} className="ri-star-fill" style={{ color: '#f59e0b', fontSize: '16px' }}></i>
+                                                    ))}
+                                                </div>
+                                                <h4 className="testi-card_title">{item.name}</h4>
+                                                <p className="testi-card_text">
+                                                    {item.comment}
+                                                </p>
+                                                <div className="testi-card-profile">
+                                                    <h4 className="testi-profile-title">{item.role || item.name}</h4>
+                                                    <span className="testi-profile-desig">
+                                                        {item.project}
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div className="col-lg-6">
-                                <div className="testi-card">
-                                    <div className="quote-icon">
-                                        <img src="/main-assets/img/icon/quote.svg" alt="img" />
-                                    </div>
-                                    <div className="testi-card-thumb">
-                                        <img src="/main-assets/img/testimonial/testi_1_2.png" alt="img" />
-                                    </div>
-                                    <div className="testi-card_content">
-                                        <h4 className="testi-card_title">Best Company!</h4>
-                                        <p className="testi-card_text">
-                                            Tortor posuere ac ut consequat. Tellusi elem isis etum sag
-                                            ittis vitae et leo duis ut diam. Odio ut sem nulla phar.
-                                            Purus sit ame nus mas do eiusmod.
-                                        </p>
-                                        <div className="testi-card-profile">
-                                            <h4 className="testi-profile-title">Aleesha brown.</h4>
-                                            <span className="testi-profile-desig">
-                                                CEO at Construz
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="col-lg-6">
-                                <div className="testi-card">
-                                    <div className="quote-icon">
-                                        <img src="/main-assets/img/icon/quote.svg" alt="img" />
-                                    </div>
-                                    <div className="testi-card-thumb">
-                                        <img src="/main-assets/img/testimonial/testi_1_1.png" alt="img" />
-                                    </div>
-                                    <div className="testi-card_content">
-                                        <h4 className="testi-card_title">Best Company!</h4>
-                                        <p className="testi-card_text">
-                                            Tortor posuere ac ut consequat. Tellusi elem isis etum sag
-                                            ittis vitae et leo duis ut diam. Odio ut sem nulla phar.
-                                            Purus sit ame nus mas do eiusmod.
-                                        </p>
-                                        <div className="testi-card-profile">
-                                            <h4 className="testi-profile-title">Aleesha brown.</h4>
-                                            <span className="testi-profile-desig">
-                                                CEO at Construz
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                );
+                            })}
                         </Slider>
 
                         <div className="btn-wrap mt-70">
@@ -152,40 +127,13 @@ const Testimonial = () => {
                                 </button>
                             </div>
                             <div className="client-group-thumb">
-                                <img src="/main-assets/img/normal/client_group_1-2.png" alt="img" />
-                            </div>
-                            <div className="testi-counter-wrap">
-                                <h3 className="testi-counter-number">
-                                    <span className="counter-number">2</span>m+
-                                </h3>
-                                <p className="testi-counter-text">Success Peoples</p>
+                                <img src="/main-assets/img/normal/client_group_1-1.png" alt="img" />
                             </div>
                         </div>
                     </div>
-
                     <div className="col-xl-6">
-                        <div
-                            className="testimonial-card background-image"
-                            style={{
-                                backgroundImage: "url('/main-assets/img/bg/testimonial-card-bg1-1.png')",
-                                backgroundSize: "cover",
-                                backgroundRepeat: "no-repeat",
-                                backgroundPosition: "center",
-                                overflow: 'hidden'
-                            }}
-                        >
-                            <h3 className="testimonial-card-title">
-                                Have you any questions?
-                            </h3>
-                            <p className="testimonial-card-text">
-                                Podcasting operational change management inside of making this
-                                the first true generator.
-                            </p>
-                            <div className="btn-group">
-                                <Link href="landing-assets/contact" className="btn style6">
-                                    Contact with Us <i className="ri-arrow-right-up-line"></i>
-                                </Link>
-                            </div>
+                        <div className="testimonial-thumb1">
+                            <img src="/main-assets/img/normal/testimonial_2-1.png" alt="img" />
                         </div>
                     </div>
                 </div>

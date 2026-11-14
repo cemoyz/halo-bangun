@@ -13,14 +13,15 @@ const NiceSelectDropDown = () => {
         name="subject"
         id="subject"
         className="single-select nice-select form-select"
+        defaultValue=""
       >
-        <option value="" disabled selected hidden>
-          Your Inquiry
+        <option value="" disabled hidden>
+          Pilih Layanan Konsultasi
         </option>
-        <option value="Web Design">Web Design</option>
-        <option value="Web Development">Web Development</option>
-        <option value="Engine Diagnostics">Engine Diagnostics</option>
-        <option value="Digital Marketing">Digital Marketing</option>
+        <option value="Desain Arsitektur & 3D">Desain Arsitektur & 3D</option>
+        <option value="Renovasi & Bangun">Renovasi & Bangun</option>
+        <option value="Perhitungan RAB">Perhitungan RAB</option>
+        <option value="Pengurusan Izin PBG">Pengurusan Izin PBG</option>
       </select>
     </div>
   );

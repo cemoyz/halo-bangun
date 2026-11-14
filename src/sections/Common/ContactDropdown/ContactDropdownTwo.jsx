@@ -7,23 +7,26 @@ const ContactDropdownTwo = () => {
   useEffect(() => {
     niceSelect();
   }, []);
-  const defaultValue = 'Your Inquiry';
-  const options = [
-    { value: 'Web Design', label: 'Web Design' },
-    { value: 'Web Development', label: 'Web Development' },
-    { value: 'Engine Diagnostics', label: 'Engine Diagnostics' },
-    { value: 'Digital Marketing', label: 'Digital Marketing' }
-  ];
-  return (
 
+  const defaultValue = 'Pilih Layanan Konsultasi';
+  const options = [
+    { value: 'Desain Arsitektur & 3D Render', label: 'Jasa Desain Arsitektur & 3D' },
+    { value: 'Pembangunan & Renovasi', label: 'Renovasi & Bangun Rumah Baru' },
+    { value: 'Perhitungan RAB & Rencana Kerja', label: 'Perhitungan RAB & Rencana Kerja' },
+    { value: 'Pengurusan Izin PBG (Yogyakarta)', label: 'Pengurusan Izin PBG (Yogyakarta)' },
+    { value: 'Konsultasi Lainnya', label: 'Konsultasi Proyek Lainnya' }
+  ];
+
+  return (
     <div className="col-12">
       <div className="form-group custom-form-design">
         <select
           name="subject"
           id="subject"
           className="single-select nice-select form-select"
+          defaultValue=""
         >
-          <option className="select-style" value="" disabled selected hidden>
+          <option className="select-style" value="" disabled hidden>
             {defaultValue}
           </option>
           {options.map((option, index) => (

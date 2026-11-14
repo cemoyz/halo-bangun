@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 
-export default function FloatingWhatsApp() {
+export default function FloatingWhatsApp({ phoneNumber }: { phoneNumber?: string }) {
   const [hovered, setHovered] = useState(false);
+  const cleanPhone = (phoneNumber || '082135450404').replace(/^0/, '62').replace(/[^0-9]/g, '');
 
   return (
     <div
@@ -38,7 +39,7 @@ export default function FloatingWhatsApp() {
       )}
 
       <a
-        href="https://wa.me/6282135450404?text=Halo%20Bangun,%20saya%20ingin%20konsultasi%20mengenai%20layanan%20arsitektur%20/%20konstruksi%20/%20renovasi."
+        href={`https://wa.me/${cleanPhone}?text=Halo%20Bangun,%20saya%20ingin%20konsultasi%20mengenai%20layanan%20arsitektur%20/%20konstruksi%20/%20renovasi.`}
         target="_blank"
         rel="noopener noreferrer"
         onMouseEnter={() => setHovered(true)}
@@ -79,3 +80,4 @@ export default function FloatingWhatsApp() {
     </div>
   );
 }
+

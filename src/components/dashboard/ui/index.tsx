@@ -138,7 +138,7 @@ CardFooter.displayName = 'CardFooter';
 
 // ================= Badge Component =================
 export const Badge: React.FC<{
-  variant?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'outline';
+  variant?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'outline' | 'neutral';
   style?: React.CSSProperties;
   className?: string;
   children: React.ReactNode;
@@ -174,6 +174,11 @@ export const Badge: React.FC<{
       color: 'var(--dash-text-muted)',
       border: '1px solid var(--dash-border)',
     },
+    neutral: {
+      background: 'rgba(100, 116, 139, 0.12)',
+      color: '#64748b',
+      border: '1px solid rgba(100, 116, 139, 0.25)',
+    },
   };
 
   return (
@@ -202,7 +207,7 @@ export const Badge: React.FC<{
 export const Button = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    variant?: 'primary' | 'secondary' | 'danger' | 'outline' | 'ghost';
+    variant?: 'primary' | 'secondary' | 'danger' | 'outline' | 'ghost' | 'success';
     size?: 'sm' | 'md' | 'lg';
     icon?: string;
     loading?: boolean;
@@ -214,6 +219,12 @@ export const Button = React.forwardRef<
       color: '#ffffff',
       border: 'none',
       boxShadow: '0 2px 8px rgba(249, 115, 22, 0.25)',
+    },
+    success: {
+      background: '#10b981',
+      color: '#ffffff',
+      border: 'none',
+      boxShadow: '0 2px 8px rgba(16, 185, 129, 0.25)',
     },
     secondary: {
       background: 'var(--dash-muted-bg)',

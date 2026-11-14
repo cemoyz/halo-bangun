@@ -37,10 +37,10 @@ const ProcessThree = () => {
               <div className="title-area text-left content-text-extra-style">
                 <span className="sub-title text-white">
                   <img src="/main-assets/img/icon/section-subtitle-icon.svg" alt="img" />
-                  Work Process
+                  Alur Kerja Kami
                 </span>
                 <h2 className="sec-title text-white">
-                  Our services that we provide
+                  4 Langkah Mudah Mewujudkan Bangunan Impian Anda
                 </h2>
               </div>
             </div>
@@ -49,7 +49,7 @@ const ProcessThree = () => {
                 <a onClick={openPopup}
                   className=" play-btn-wrap"
                 >
-                  Play Video
+                  Tonton Video Profil
                   <span className="play-btn style2">
                     <i className="ri-play-fill"></i>
                   </span>
@@ -63,13 +63,13 @@ const ProcessThree = () => {
                 <div className="process-card">
                   <div className="process-card-number">
                     <span> 01 </span>
-                    STEP
+                    LANGKAH
                   </div>
                   <h4 className="process-card-title">
-                    Meet and consultant about project
+                    Konsultasi & Survey Lokasi
                   </h4>
                   <p className="process-card-text">
-                    Industry standard dummy text took since the when an unknown
+                    Diskusi kebutuhan desain, pengukuran tanah langsung, serta analisis anggaran tanpa biaya awal.
                   </p>
                 </div>
               </div>
@@ -77,13 +77,13 @@ const ProcessThree = () => {
                 <div className="process-card">
                   <div className="process-card-number">
                     <span> 02 </span>
-                    STEP
+                    LANGKAH
                   </div>
                   <h4 className="process-card-title">
-                    Product design and planning
+                    Desain Arsitektur & RAB Pasti
                   </h4>
                   <p className="process-card-text">
-                    Known printer took a galley of type and scrambled it to make
+                    Pembuatan visual 3D, gambar kerja detail (DED), dan rincian anggaran yang mengikat tanpa biaya siluman.
                   </p>
                 </div>
               </div>
@@ -91,14 +91,13 @@ const ProcessThree = () => {
                 <div className="process-card">
                   <div className="process-card-number">
                     <span> 03 </span>
-                    STEP
+                    LANGKAH
                   </div>
                   <h4 className="process-card-title">
-                    Testing and quality control
+                    Konstruksi & Live Monitoring
                   </h4>
                   <p className="process-card-text">
-                    It has survived not only centuries also the leap into
-                    electronic
+                    Pelaksanaan kerja terstruktur sesuai Kurva S dengan pantauan CCTV langsung di dashboard klien.
                   </p>
                 </div>
               </div>
@@ -106,13 +105,13 @@ const ProcessThree = () => {
                 <div className="process-card">
                   <div className="process-card-number">
                     <span> 04 </span>
-                    STEP
+                    LANGKAH
                   </div>
                   <h4 className="process-card-title">
-                    Final assembly and project handover
+                    Serah Terima & Garansi Resmi
                   </h4>
                   <p className="process-card-text">
-                    Electronic typesetting conta the popularised in the 1960s
+                    Penandatanganan BAST resmi, serah terima kunci unit, dan proteksi garansi pemeliharaan tertulis.
                   </p>
                 </div>
               </div>

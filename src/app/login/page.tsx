@@ -57,7 +57,7 @@ const DEMO_ACCOUNTS = [
   },
 ];
 
-export default function LoginPage() {
+function LoginFormContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectParam = searchParams.get('redirect') || '';
@@ -538,6 +538,18 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <React.Suspense fallback={
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0a0f1d', color: '#fff' }}>
+        <i className="ri-loader-4-line ri-spin" style={{ fontSize: '32px', color: '#f97316' }}></i>
+      </div>
+    }>
+      <LoginFormContent />
+    </React.Suspense>
   );
 }
 

@@ -10,7 +10,7 @@ import { Card, CardHeader, CardTitle, CardContent, Badge, Button, PageHeader } f
 export const dynamic = 'force-dynamic';
 
 export default async function ProjectsPage() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get(COOKIE_NAME)?.value;
   const user = token ? await verifyToken(token) : null;
 
@@ -46,9 +46,11 @@ export default async function ProjectsPage() {
         subtitle="Pantau status konstruksi, dokumen SPKPR, progres fisik, dan serah terima BAST."
         action={
           user.role === 'OWNER' ? (
-            <Button variant="primary" icon="ri-add-line">
-              + Inisiasi Proyek Baru (FR-20)
-            </Button>
+            <Link href="/dashboard/projects/new" style={{ textDecoration: 'none' }}>
+              <Button variant="primary" icon="ri-magic-line">
+                + Buat Proyek Baru (Wizard Onboarding)
+              </Button>
+            </Link>
           ) : undefined
         }
       />
@@ -103,10 +105,12 @@ export default async function ProjectsPage() {
                     <span style={{ color: 'var(--dash-text-muted)' }}>Pengawas (PM):</span>
                     <span style={{ fontWeight: 600, color: 'var(--dash-text-main)' }}>{p.pm?.name || '-'}</span>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ color: 'var(--dash-text-muted)' }}>Nilai Kontrak:</span>
-                    <span style={{ fontWeight: 800, color: '#f97316' }}>{formatIDR(p.contract_value)}</span>
-                  </div>
+                  {user.role !== 'PM' && user.role !== 'MANDOR' && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: 'var(--dash-text-muted)' }}>Nilai Kontrak:</span>
+                      <span style={{ fontWeight: 800, color: '#f97316' }}>{formatIDR(p.contract_value)}</span>
+                    </div>
+                  )}
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <span style={{ color: 'var(--dash-text-muted)' }}>Dokumen BAST:</span>
                     <span style={{ fontWeight: 700, color: p.bast_unlocked ? '#10b981' : '#ef4444' }}>

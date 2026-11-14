@@ -362,76 +362,19 @@ const MultiPageMobileMenu = ({ isMenuOpen, setIsMenuOpen }) => {
                 </div>
                 <div className="mobile-menu">
                     <ul>
-                        <li className={`menu-item-has-children submenu-item-has-children ${isHomeMenuOpen ? 'active-class' : ''}`}>
-                            <Link onClick={() => setIsHomeMenuOpen(!isHomeMenuOpen)} href="#">Home <span className="mean-expand-class"></span></Link>
-                            <ul className={`sub-menu submenu-class ${isHomeMenuOpen ? 'menu-open' : ''}`} style={menuStyles.isHomeMenu}>
-                                <li className={`menu-item-has-children submenu-item-has-children ${isMultiPageMenuOpen ? 'active-class' : ''}`}>
-                                    <Link onClick={() => setIsMultiPageMenuOpen(!isMultiPageMenuOpen)} href="#">Multipage <span className="mean-expand-class"></span></Link>
-                                    <ul className={`sub-menu submenu-class ${isMultiPageMenuOpen ? 'menu-open' : ''}`} style={menuStyles.isMultiPageMenu}>
-                                        <li><Link href="/pages/homepage/home-1">Home 01</Link></li>
-                                        <li><Link href="/pages/homepage/home-2">Home 02</Link></li>
-                                        <li><Link href="/pages/homepage/home-3">Home 03</Link></li>
-                                        <li><Link href="/pages/homepage/home-4">Home 04</Link></li>
-                                        <li><Link href="/pages/homepage/home-5">Home 05</Link></li>
-                                    </ul>
-                                </li>
-                                <li className={`menu-item-has-children submenu-item-has-children ${isOnePageMenuOpen ? 'active-class' : ''}`}>
-                                    <Link onClick={() => setIsOnePageMenuOpen(!isOnePageMenuOpen)} href="#">Onepage <span className="mean-expand-class"></span></Link>
-                                    <ul className={`sub-menu submenu-class ${isOnePageMenuOpen ? 'menu-open' : ''}`} style={menuStyles.isOnePageMenu}>
-                                        <li><Link href="/pages/homepage/home-1-op">Home 01 Onepage</Link></li>
-                                        <li><Link href="/pages/homepage/home-2-op">Home 02 Onepage</Link></li>
-                                        <li><Link href="/pages/homepage/home-3-op">Home 03 Onepage</Link></li>
-                                        <li><Link href="/pages/homepage/home-4-op">Home 04 Onepage</Link></li>
-                                        <li><Link href="/pages/homepage/home-5-op">Home 05 Onepage</Link></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><Link href="/pages/innerpage/about">About</Link></li>
-                        <li className={`menu-item-has-children submenu-item-has-children ${isPagesMenuOpen ? 'active-class' : ''}`}>
-                            <Link onClick={() => setIsPagesMenuOpen(!isPagesMenuOpen)} href="#">Pages <span className="mean-expand-class"></span></Link>
-                            <ul className={`sub-menu submenu-class ${isPagesMenuOpen ? 'menu-open' : ''}`} style={menuStyles.isPagesMenu}>
-                                <li><Link href="/pages/innerpage/team">Team Page</Link></li>
-                                <li><Link href="/pages/innerpage/team-details">Team Details</Link></li>
-                                <li><Link href="/pages/innerpage/shop">Shop Page</Link></li>
-                                <li><Link href="/pages/innerpage/shop-details">Shop Details</Link></li>
-                                <li><Link href="/pages/innerpage/cart">Cart</Link></li>
-                                <li><Link href="/pages/innerpage/checkout">Checkout</Link></li>
-                                <li><Link href="/pages/innerpage/wishlist">Wishlist</Link></li>
-                            </ul>
-                        </li>
-                        <li className={`menu-item-has-children submenu-item-has-children ${isProjectMenuOpen ? 'active-class' : ''}`}>
-                            <Link onClick={() => setIsProjectMenuOpen(!isProjectMenuOpen)} href="#">Project <span className="mean-expand-class"></span></Link>
-                            <ul className={`sub-menu submenu-class ${isProjectMenuOpen ? 'menu-open' : ''}`} style={menuStyles.isProjectMenu}>
-                                <li><Link href="/pages/innerpage/project">Projects</Link></li>
-                                <li><Link href="/pages/innerpage/project-details">Project Details</Link></li>
-                            </ul>
-                        </li>
+                        <li><Link href="/">Beranda</Link></li>
+                        <li><Link href="/about">Tentang Kami</Link></li>
                         <li className={`menu-item-has-children submenu-item-has-children ${isServiceMenuOpen ? 'active-class' : ''}`}>
-                            <Link onClick={() => setIsServiceMenuOpen(!isServiceMenuOpen)} href="#">Service <span className="mean-expand-class"></span></Link>
+                            <Link onClick={() => setIsServiceMenuOpen(!isServiceMenuOpen)} href="#">Layanan <span className="mean-expand-class"></span></Link>
                             <ul className={`sub-menu submenu-class ${isServiceMenuOpen ? 'menu-open' : ''}`} style={menuStyles.isServiceMenu}>
-                                <li><Link href="/pages/innerpage/service">Service</Link></li>
-                                <li><Link href="/pages/innerpage/service-details">Service Details</Link></li>
+                                <li><Link href="/pages/innerpage/service">Semua Layanan</Link></li>
+                                <li><Link href="/pages/innerpage/service-details">Detail Layanan</Link></li>
                             </ul>
                         </li>
-                        <li className={`menu-item-has-children submenu-item-has-children ${isShopMenuOpen ? 'active-class' : ''}`}>
-                            <Link onClick={() => setIsShopMenuOpen(!isShopMenuOpen)} href="#">Shop <span className="mean-expand-class"></span></Link>
-                            <ul className={`sub-menu submenu-class ${isShopMenuOpen ? 'menu-open' : ''}`} style={menuStyles.isShopMenu}>
-                                <li><Link href="/pages/innerpage/shop">Shop</Link></li>
-                                <li><Link href="/pages/innerpage/shop-details">Shop Details</Link></li>
-                                <li><Link href="/pages/innerpage/cart">Cart</Link></li>
-                                <li><Link href="/pages/innerpage/checkout">Checkout</Link></li>
-                                <li><Link href="/pages/innerpage/wishlist">Wishlist</Link></li>
-                            </ul>
-                        </li>
-                        <li className={`menu-item-has-children submenu-item-has-children ${isBlogMenuOpen ? 'active-class' : ''}`}>
-                            <Link onClick={() => setIsBlogMenuOpen(!isBlogMenuOpen)} href="#">Blog <span className="mean-expand-class"></span></Link>
-                            <ul className={`sub-menu submenu-class ${isBlogMenuOpen ? 'menu-open' : ''}`} style={menuStyles.isBlogMenu}>
-                                <li><Link href="/pages/innerpage/blog">Blog</Link></li>
-                                <li><Link href="/pages/innerpage/blog-details">Blog Details</Link></li>
-                            </ul>
-                        </li>
-                        <li><Link href="/pages/innerpage/contact">Contact</Link></li>
+                        <li><Link href="/portfolio">Portofolio</Link></li>
+                        <li><Link href="/articles">Artikel Konstruksi</Link></li>
+                        <li><Link href="/pages/innerpage/contact">Kontak</Link></li>
+                        <li><Link href="/login" style={{ color: '#f97316', fontWeight: 700 }}><i className="ri-user-shared-line me-1"></i>Portal Klien / Login</Link></li>
                     </ul>
                 </div>
             </div>

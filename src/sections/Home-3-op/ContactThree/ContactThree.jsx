@@ -32,8 +32,8 @@ const ContactThree = () => {
                                         </div>
                                         <div className="col-md-6">
                                             <div className="form-group">
-                                                <select name="subject" id="subject" className="single-select nice-select form-select">
-                                                    <option value="" disabled selected hidden>Your Inquiry</option>
+                                                <select name="subject" id="subject" className="single-select nice-select form-select" defaultValue="">
+                                                    <option value="" disabled hidden>Your Inquiry</option>
                                                     <option value="Web Design">Web Design</option>
                                                     <option value="Web Development">Web Development</option>
                                                     <option value="Engine Diagnostics">Engine Diagnostics</option>

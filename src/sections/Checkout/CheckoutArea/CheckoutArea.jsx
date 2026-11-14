@@ -70,22 +70,22 @@ const CheckoutArea = () => {
                   <div className="col-lg-4 col-md-6 col-12">
                     <div className="form-group">
                       <label>Expire Date</label>
-                      <select className="form-control">
+                      <select className="form-control" defaultValue="January">
                         <option>April</option>
                         <option>March</option>
                         <option>February</option>
-                        <option selected="selected">January</option>
+                        <option>January</option>
                       </select>
                     </div>
                   </div>
                   <div className="col-lg-4 col-md-6 col-12">
                     <div className="form-group">
                       <label>Year</label>
-                      <select className="form-control">
+                      <select className="form-control" defaultValue="2021">
                         <option>2023</option>
                         <option>2022</option>
                         <option>2020</option>
-                        <option selected="selected">2021</option>
+                        <option>2021</option>
                       </select>
                     </div>
                   </div>

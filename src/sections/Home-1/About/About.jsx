@@ -3,12 +3,17 @@
 import Link from "next/link";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
+import { DEFAULT_LANDING_DATA } from "@/lib/landingContent";
 
-const About = () => {
+const About = ({ data }) => {
+    const aboutData = data || DEFAULT_LANDING_DATA.about;
     const { ref: counterRef, inView: counterInView } = useInView({
         triggerOnce: true,
         threshold: 0.1,
     });
+
+    const features = Array.isArray(aboutData.features) ? aboutData.features : DEFAULT_LANDING_DATA.about.features;
+    const mainImg = aboutData.mainImage || '/main-assets/img/normal/about_1-1.png';
 
     return (
         <div className="about-area-1 space overflow-hidden shape-mockup-wrap" ref={counterRef} id="about-sec">
@@ -30,23 +35,25 @@ const About = () => {
                     <div className="col-xl-6">
                         <div className="about-thumb1 mb-40 mb-lg-0">
                             <div className="about-img-1">
-                                <img src="/main-assets/img/normal/about_1-1.png" alt="img" />
+                                <img
+                                    src={mainImg}
+                                    alt="About Halo Bangun"
+                                    style={{ borderRadius: '12px', width: '100%', objectFit: 'cover' }}
+                                />
                             </div>
                             <div className="about-counter-wrap jump">
                                 <h3 className="about-counter-number">
                                     <span className="counter-number">
                                         {counterInView && (
                                             <CountUp
-                                                end={1.2}
-                                                duration={4}
-                                                decimals={1}
-                                                decimal="."
+                                                end={aboutData.experienceYears || 12}
+                                                duration={3}
                                             />
                                         )}
                                     </span>
-                                    k
+                                    +
                                 </h3>
-                                <p className="about-counter-text">Happy Customers</p>
+                                <p className="about-counter-text">{aboutData.experienceLabel || 'Tahun Pengalaman'}</p>
                                 <div className="about-counter-shape">
                                     <img src="/main-assets/img/normal/about_shape_1-1.png" alt="img" />
                                 </div>
@@ -61,30 +68,24 @@ const About = () => {
                             <div className="title-area mb-25">
                                 <span className="sub-title">
                                     <img src="/main-assets/img/icon/section-subtitle-icon.svg" alt="img" />
-                                    ABOUT US
+                                    {aboutData.badge || 'TENTANG HALO BANGUN'}
                                 </span>
-                                <h2 className="sec-title">We build everything that you need</h2>
+                                <h2 className="sec-title">{aboutData.title}</h2>
                                 <p className="sec-text">
-                                    We craft unique digital experiences. With more than 7 years of
-                                    expertise, we design and code clean websites.
+                                    {aboutData.description}
                                 </p>
                             </div>
                             <div className="checklist mb-35">
                                 <ul>
-                                    <li>
-                                        <img
-                                            src="/main-assets/img/icon/about-checklsit-icon1-1.svg"
-                                            alt="img"
-                                        />
-                                        Providing Solutions For Construction, Management
-                                    </li>
-                                    <li>
-                                        <img
-                                            src="/main-assets/img/icon/about-checklsit-icon1-1.svg"
-                                            alt="img"
-                                        />
-                                        Engineers design and build the structure
-                                    </li>
+                                    {features.map((item, idx) => (
+                                        <li key={idx}>
+                                            <img
+                                                src="/main-assets/img/icon/about-checklsit-icon1-1.svg"
+                                                alt="check"
+                                            />
+                                            {item}
+                                        </li>
+                                    ))}
                                 </ul>
                             </div>
                             <div className="about-grid-wrap">
@@ -92,10 +93,9 @@ const About = () => {
                                     <img src="/main-assets/img/icon/about-grid-icon1-1.svg" alt="img" />
                                 </div>
                                 <div className="about-grid-details">
-                                    <h4 className="title">Our Mission</h4>
+                                    <h4 className="title">Misi Kami</h4>
                                     <p className="text">
-                                        We craft unique digital experiences. With more years of
-                                        expertise we design
+                                        Memberikan ketenangan lahir batin bagi pemilik bangunan lewat transparansi Kurva S digital dan mutu tanpa kompromi.
                                     </p>
                                 </div>
                             </div>
@@ -104,17 +104,25 @@ const About = () => {
                                     <img src="/main-assets/img/icon/about-grid-icon1-2.svg" alt="img" />
                                 </div>
                                 <div className="about-grid-details">
-                                    <h4 className="title">Our Vision</h4>
+                                    <h4 className="title">Visi Kami</h4>
                                     <p className="text">
-                                        We craft unique digital experiences. With more years of
-                                        expertise we design
+                                        Menjadi tolok ukur kontraktor profesional dan terpercaya di Indonesia dalam hal kejujuran anggaran dan mutu konstruksi.
                                     </p>
                                 </div>
                             </div>
                             <div className="btn-group mt-60">
-                                <Link href="/pages/innerpage/about" className="btn style3">
-                                    Explore Our Company <i className="ri-arrow-right-up-line"></i>
+                                <Link href="/about" className="btn style3">
+                                    Pelajari Profil Lengkap <i className="ri-arrow-right-up-line"></i>
                                 </Link>
+                                {aboutData.phoneConsult && (
+                                    <a
+                                        href={`tel:${aboutData.phoneConsult.replace(/[^0-9]/g, '')}`}
+                                        className="btn"
+                                        style={{ background: '#f1f5f9', color: '#0f172a', marginLeft: '12px', border: '1px solid #cbd5e1' }}
+                                    >
+                                        <i className="ri-phone-line" style={{ color: '#2563eb' }}></i> {aboutData.phoneConsult}
+                                    </a>
+                                )}
                             </div>
                         </div>
                     </div>

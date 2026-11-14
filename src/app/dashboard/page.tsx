@@ -11,7 +11,7 @@ import { Role, ROLE_CONFIGS } from '@/lib/rbac';
 export const dynamic = 'force-dynamic';
 
 export default async function DashboardMainPage() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get(COOKIE_NAME)?.value;
   const user = token ? await verifyToken(token) : null;
 
@@ -77,14 +77,24 @@ export default async function DashboardMainPage() {
         subtitle="Pantau seluruh portofolio proyek konstruksi, arus kas riil, dan margin laba perusahaan."
         action={
           <div style={{ display: 'flex', gap: '8px' }}>
+            <Link href="/dashboard/projects/new">
+              <Button variant="primary" icon="ri-magic-line">
+                + Buat Proyek Baru (Wizard)
+              </Button>
+            </Link>
+            <Link href="/dashboard/cms">
+              <Button variant="secondary" icon="ri-layout-masonry-line">
+                CMS Laman Depan
+              </Button>
+            </Link>
             <Link href="/dashboard/projects">
               <Button variant="secondary" icon="ri-folder-2-line">
                 Semua Proyek
               </Button>
             </Link>
             <Link href="/dashboard/finance">
-              <Button variant="primary" icon="ri-calculator-line">
-                Laporan Keuangan
+              <Button variant="secondary" icon="ri-calculator-line">
+                Keuangan
               </Button>
             </Link>
           </div>

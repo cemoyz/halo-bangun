@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const BreadcumbThree = () => {
+const BreadcumbThree = ({ title = "Detail Artikel" }) => {
   return (
     <div
       className="breadcumb-wrapper"
@@ -15,22 +15,22 @@ const BreadcumbThree = () => {
       <div className="container">
         <div className="breadcumb-content">
           <div className="row justify-content-center">
-            <div className="col-lg-6">
+            <div className="col-lg-8">
               <h1 className="breadcumb-title">
-                Construction process streamlines
+                {title}
               </h1>
             </div>
             <div className="col-12">
               <ul className="breadcumb-menu">
                 <li>
-                  <Link href="/pages/homepage/home-1">
-                    <i className="ri-home-4-fill"></i> HOME
+                  <Link href="/">
+                    <i className="ri-home-4-fill"></i> BERANDA
                   </Link>
                 </li>
                 <li>
-                  <Link href="/pages/innerpage/blog">OUR BLOG</Link>
+                  <Link href="/articles">ARTIKEL</Link>
                 </li>
-                <li className="active">Construction Process Streamlines</li>
+                <li className="active">{title}</li>
               </ul>
             </div>
           </div>

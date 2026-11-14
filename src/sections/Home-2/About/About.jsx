@@ -4,9 +4,9 @@ import CountUp from "react-countup";
 const About = () => {
     return (
         <div className="about-area-2 space overflow-hidden shape-mockup-wrap" id="about-sec">
-            <div class="section-animation-shape1-1 shape-mockup animation-infinite background-image" data-top="0" style={{ backgroundImage: "url('/main-assets/img/shape/global-line-shape1.png')", top: '0px' }}>
+            <div className="section-animation-shape1-1 shape-mockup animation-infinite background-image" data-top="0" style={{ backgroundImage: "url('/main-assets/img/shape/global-line-shape1.png')", top: '0px' }}>
             </div>
-            <div class="section-animation-shape1-2 shape-mockup animation-infinite background-image" style={{ backgroundImage: "url('/main-assets/img/shape/global-line-shape2.png')", bottom: '0px' }}>
+            <div className="section-animation-shape1-2 shape-mockup animation-infinite background-image" style={{ backgroundImage: "url('/main-assets/img/shape/global-line-shape2.png')", bottom: '0px' }}>
             </div>
             <div className="container">
                 <div className="row gx-60 align-items-center flex-row-reverse">

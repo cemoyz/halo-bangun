@@ -16,15 +16,15 @@ const Team = () => {
             <div className="title-area text-left content-text-extra-style">
               <span className="sub-title">
                 <img src="/main-assets/img/icon/section-subtitle-icon.svg" alt="img" />
-                Our Team
+                Tim Profesional
               </span>
-              <h2 className="sec-title">Meet our leadership</h2>
+              <h2 className="sec-title">Dikelola Tenaga Ahli Berpengalaman</h2>
             </div>
           </div>
           <div className="col-md-auto">
             <div className="sec-btn">
-              <Link href="/pages/innerpage/about" className="btn">
-                View All Members <i className="ri-arrow-right-up-line"></i>
+              <Link href="/about" className="btn">
+                Tentang Kami <i className="ri-arrow-right-up-line"></i>
               </Link>
             </div>
           </div>

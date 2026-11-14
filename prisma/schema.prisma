@@ -53,6 +53,7 @@ enum PaymentStatus {
   UNPAID
   PENDING_VERIFICATION
   PAID
+  REJECTED
 }
 
 enum PortfolioCategory {
@@ -143,34 +144,66 @@ model ProjectDocument {
 }
 
 model DailyReport {
-  id           Int      @id @default(autoincrement())
-  project_id   Int
-  date         DateTime
-  weather      String   // e.g. "Cerah", "Hujan Ringan", "Berawan"
-  worker_count Int      @default(0)
-  notes        String   @db.Text
-  photos       String[] // max 3 photos URL
-  created_by   Int
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id                Int               @id @default(autoincrement())
+  project_id        Int
+  day_number        Int?              // Hari ke- (e.g. Hari 1 s/d 42)
+  date              DateTime
+  weather           String            // e.g. "Cerah", "Berawan", "Mendung", "Hujan Ringan", "Hujan Lebat"
+  weather_details   String?           // Jam cuaca / penghambat (e.g. "Mendung pkl 15:00, Hujan pkl 16:00")
+  worker_count      Int               @default(0)
+  manpower_details  Json?             // Tenaga Kerja [{ role: "Pelaksana", count: 1, unit: "OH" }, ...]
+  materials_details Json?             // Bahan / Material [{ name: "Gypsum", volume: "67", unit: "lmbr" }, ...]
+  supervisor_name   String?           // Supervisi / Pengawas Lapangan (e.g. "Arizal - PT. Sinergitama Konstruksi Indonesia")
+  contractor_name   String?           // Kontraktor Pelaksana (e.g. "Irfan Aulia Ulumuddin - PT. Aulia Indoland Grup")
+  notes             String            @db.Text
+  obstacles         String?           @db.Text // Kendala teknis lapangan
+  solutions         String?           @db.Text // Solusi / tindakan mitigasi
+  photos            String[]          // max 3 photos URL
+  status            String            @default("SUBMITTED") // "DRAFT" | "SUBMITTED"
+  created_by        Int
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
 
-  project      Project  @relation(fields: [project_id], references: [id], onDelete: Cascade)
-  author       User     @relation(fields: [created_by], references: [id], onDelete: Cascade)
+  project      Project           @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  author       User              @relation(fields: [created_by], references: [id], onDelete: Cascade)
+  items        DailyReportItem[]
 
   @@map("daily_reports")
 }
 
-model SCurveProgress {
-  id                 Int      @id @default(autoincrement())
-  project_id         Int
-  week_number        Int
-  planned_percentage Float    @default(0)
-  actual_percentage  Float    @default(0)
-  target_date        DateTime?
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+model DailyReportItem {
+  id               Int         @id @default(autoincrement())
+  daily_report_id  Int
+  task_name        String
+  category         String?     // e.g. "Pekerjaan Struktur", "Pekerjaan Arsitektur", "Pekerjaan MEP", "Finishing"
+  status           String      @default("IN_PROGRESS") // "COMPLETED", "IN_PROGRESS", "ON_HOLD"
+  volume           String?     // e.g. "Pengecoran 25 m2", "100%", "Pasang 12 m kusen"
+  notes            String?     @db.Text
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
 
-  project            Project  @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  dailyReport      DailyReport @relation(fields: [daily_report_id], references: [id], onDelete: Cascade)
+
+  @@map("daily_report_items")
+}
+
+model SCurveProgress {
+  id                  Int      @id @default(autoincrement())
+  project_id          Int
+  week_number         Int
+  planned_percentage  Float    @default(0)
+  actual_percentage   Float    @default(0)
+  cumulative_planned  Float    @default(0)
+  cumulative_actual   Float    @default(0)
+  planned_cost        Decimal? @db.Decimal(15, 2)
+  actual_cost         Decimal? @db.Decimal(15, 2)
+  status              String   @default("IN_PROGRESS") // "COMPLETED", "IN_PROGRESS", "ON_HOLD"
+  notes               String?  @db.Text
+  target_date         DateTime?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  project             Project  @relation(fields: [project_id], references: [id], onDelete: Cascade)
 
   @@unique([project_id, week_number])
   @@map("s_curve_progress")
@@ -228,20 +261,23 @@ model EquipmentInventory {
 }
 
 model Payment {
-  id           Int           @id @default(autoincrement())
-  project_id   Int
-  termin_name  String        // e.g. "Termin 1 (DP 30%)", "Termin 2 (Struktur 30%)"
-  amount       Float         @default(0)
-  status       PaymentStatus @default(UNPAID)
-  due_date     DateTime?
-  paid_at      DateTime?
-  proof_url    String?
-  receipt_url  String?
-  notes        String?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id               Int           @id @default(autoincrement())
+  project_id       Int
+  termin_number    Int           @default(1)
+  termin_name      String        // e.g. "DP 30%", "Termin 1 (Progres 50%)", "Pelunasan 100%"
+  percentage       Float         @default(0)
+  amount           Float         @default(0)
+  status           PaymentStatus @default(UNPAID)
+  due_date         DateTime?
+  paid_at          DateTime?
+  proof_url        String?
+  receipt_url      String?
+  rejection_reason String?       @db.Text
+  notes            String?       @db.Text
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
 
-  project      Project       @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  project          Project       @relation(fields: [project_id], references: [id], onDelete: Cascade)
 
   @@map("payments")
 }
@@ -339,4 +375,15 @@ model ClientFeedback {
 
   @@map("client_feedbacks")
 }
+
+model LandingPageContent {
+  id        String   @id @default(cuid())
+  section   String   @unique
+  data      Json
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  @@map("landing_page_contents")
+}
+
 

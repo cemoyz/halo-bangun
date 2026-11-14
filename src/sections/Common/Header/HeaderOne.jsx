@@ -79,22 +79,20 @@ const HeaderOne = () => {
                             </Link>
                         </div>
                         <p className="about-text mb-4">
-                            A small business can be better than a big business because of agility and
-                            adaptability due to their size and scale.
+                            Halo Bangun adalah penyedia jasa konstruksi, arsitektur, dan renovasi terpercaya dengan RAB mengikat, monitoring Kurva S transparan, dan garansi tertulis.
                         </p>
 
                         <p className="footer-text">
-                            <Link href="tel:851555961658">
-                                <i className="ri-phone-line space-right-sidebar-icon"></i>+85 155 596 1658
+                            <Link href="https://wa.me/6282135450404" target="_blank">
+                                <i className="ri-phone-line space-right-sidebar-icon"></i>0821-3545-0404
                             </Link>
                         </p>
                         <p className="contact-text">
-                            <i className="ri-map-pin-line space-right-sidebar-icon"></i> Losangle, Street Road 24, New
-                            York, USA - 67452
+                            <i className="ri-map-pin-line space-right-sidebar-icon"></i> D.I. Yogyakarta, Jawa Tengah, Jawa Barat
                         </p>
                         <p className="footer-text">
-                            <Link href="mailto:support@gmail.com">
-                                <i className="ri-mail-line space-right-sidebar-icon"></i>support@gmail.com
+                            <Link href="mailto:halo@halobangun.id">
+                                <i className="ri-mail-line space-right-sidebar-icon"></i>halo@halobangun.id
                             </Link>
                         </p>
                         <div className="social-btn style3 mt-30">
@@ -184,8 +182,8 @@ const HeaderOne = () => {
                                 <div className="header-top-right">
                                     <div className="header-links ps-0">
                                         <ul>
-                                            <li><i className="ri-time-line"></i>Mon - Sat / 8am : 12pm</li>
-                                            <li><i className="ri-map-pin-line"></i><Link href="https://www.google.com/maps">96 Jones Street, New York, USA</Link></li>
+                                            <li><i className="ri-time-line"></i>Senin - Minggu / 08.00 - 21.00 WIB</li>
+                                            <li><i className="ri-map-pin-line"></i><span>D.I. Yogyakarta, Jateng & Jabar</span></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -209,88 +207,30 @@ const HeaderOne = () => {
                                 <div className="col-auto menu-bar ms-xxl-0">
                                     <nav className="main-menu d-none d-lg-inline-block">
                                         <ul>
+                                            <li>
+                                                <Link href="/">BERANDA</Link>
+                                            </li>
+                                            <li>
+                                                <Link href="/about">TENTANG KAMI</Link>
+                                            </li>
                                             <li className="menu-item-has-children">
-                                                <Link href="#">HOME</Link>
+                                                <Link href="#">LAYANAN</Link>
                                                 <ul className="sub-menu">
-                                                    <li className="menu-item-has-children">
-                                                        <Link href="#">Multipage</Link>
-                                                        <ul className="sub-menu">
-                                                            <li>
-                                                                <Link href="/pages/homepage/home-1">Home 01</Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link href="/pages/homepage/home-2">Home 02</Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link href="/pages/homepage/home-3">Home 03</Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link href="/pages/homepage/home-4">Home 04</Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link href="/pages/homepage/home-5">Home 05</Link>
-                                                            </li>
-                                                        </ul>
-                                                    </li>
-                                                    <li className="menu-item-has-children">
-                                                        <Link href="#">Onepage</Link>
-                                                        <ul className="sub-menu">
-                                                            <li>
-                                                                <Link href="/pages/homepage/home-1-op">Home 01 Onepage</Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link href="/pages/homepage/home-2-op">Home 02 Onepage</Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link href="/pages/homepage/home-3-op">Home 03 Onepage</Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link href="/pages/homepage/home-4-op">Home 04 Onepage</Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link href="/pages/homepage/home-5-op">Home 05 Onepage</Link>
-                                                            </li>
-                                                        </ul>
-                                                    </li>
+                                                    <li><Link href="/pages/innerpage/service">Semua Layanan</Link></li>
+                                                    <li><Link href="/pages/innerpage/service-details">Detail Layanan</Link></li>
                                                 </ul>
                                             </li>
                                             <li>
-                                                <Link href="/pages/innerpage/about">ABOUT</Link>
-                                            </li>
-                                            <li className="menu-item-has-children">
-                                                <Link href="#">SERVICES</Link>
-                                                <ul className="sub-menu">
-                                                    <li><Link href="/pages/innerpage/service">Service</Link></li>
-                                                    <li><Link href="/pages/innerpage/service-details">Service Details</Link></li>
-                                                </ul>
-                                            </li>
-                                            <li className="menu-item-has-children">
-                                                <Link href="#">PAGES</Link>
-                                                <ul className="sub-menu">
-                                                    <li><Link href="/pages/innerpage/project">Project Page</Link></li>
-                                                    <li><Link href="/pages/innerpage/project-details">Project Details</Link></li>
-                                                    <li><Link href="/pages/innerpage/team">Team Page</Link></li>
-                                                    <li><Link href="/pages/innerpage/team-details">Team Details</Link></li>
-                                                    <li><Link href="/pages/innerpage/shop">Shop Page</Link></li>
-                                                    <li><Link href="/pages/innerpage/shop-details">Shop Details</Link></li>
-                                                    <li><Link href="/pages/innerpage/cart">Cart</Link></li>
-                                                    <li><Link href="/pages/innerpage/checkout">Checkout</Link></li>
-                                                    <li><Link href="/pages/innerpage/wishlist">Wishlist</Link></li>
-                                                </ul>
-                                            </li>
-                                            <li className="menu-item-has-children">
-                                                <Link href="#">NEWS</Link>
-                                                <ul className="sub-menu">
-                                                    <li><Link href="/pages/innerpage/blog">News</Link></li>
-                                                    <li><Link href="/pages/innerpage/blog-details">News Details</Link></li>
-                                                </ul>
-                                            </li>
-
-                                            <li>
-                                                <Link href="/pages/innerpage/contact">CONTACT</Link>
+                                                <Link href="/portfolio">PORTOFOLIO</Link>
                                             </li>
                                             <li>
-                                                <Link href="/login" style={{ color: '#f97316', fontWeight: 700 }}><i className="ri-lock-line me-1"></i>PORTAL LOGIN</Link>
+                                                <Link href="/articles">ARTIKEL</Link>
+                                            </li>
+                                            <li>
+                                                <Link href="/pages/innerpage/contact">KONTAK</Link>
+                                            </li>
+                                            <li>
+                                                <Link href="/login" style={{ color: '#f97316', fontWeight: 700 }}><i className="ri-user-shared-line me-1"></i>PORTAL KLIEN</Link>
                                             </li>
                                         </ul>
                                     </nav>
@@ -316,8 +256,8 @@ const HeaderOne = () => {
                                 <i className="ri-phone-fill"></i>
                             </div>
                             <div className="navbar-right-desc-details">
-                                <h6 className="title">Call us any time</h6>
-                                <Link className="link" href="tel:+2590256215">+123 556 8824</Link>
+                                <h6 className="title">Konsultasi WA</h6>
+                                <Link className="link" href="https://wa.me/6282135450404" target="_blank">0821-3545-0404</Link>
                             </div>
                         </div>
                     </div>
