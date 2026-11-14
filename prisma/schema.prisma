@@ -124,6 +124,7 @@ model Project {
   financialAllocation   ProjectFinancialAllocation?
   payrolls              Payroll[]
   feedbacks             ClientFeedback[]
+  warrantyClaims        WarrantyClaim[]
 
   @@map("projects")
 }
@@ -310,6 +311,7 @@ model Payroll {
   operational_allowance Float    @default(0)
   bonus                 Float    @default(0)
   total_amount          Float    @default(0)
+  breakdown             Json?    // Detailed PT AIG components (10 gross earnings, 8 deductions, net, terbilang)
   slip_url              String?
   status                String   @default("PAID")
   paid_date             DateTime @default(now())
@@ -374,6 +376,23 @@ model ClientFeedback {
   client     User     @relation(fields: [client_id], references: [id], onDelete: Cascade)
 
   @@map("client_feedbacks")
+}
+
+model WarrantyClaim {
+  id          Int      @id @default(autoincrement())
+  project_id  Int
+  claim_date  DateTime @default(now())
+  item_name   String
+  description String?  @db.Text
+  status      String   @default("DILAPORKAN") // DILAPORKAN, DIJADWALKAN, SEDANG_DIKERJAKAN, SELESAI
+  repaired_at DateTime?
+  notes       String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  project     Project  @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@map("warranty_claims")
 }
 
 model LandingPageContent {

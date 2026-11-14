@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { userId, projectId, period, baseSalary, operationalAllowance, bonus, slipUrl } = body;
+    const { userId, projectId, period, baseSalary, operationalAllowance, bonus, slipUrl, breakdown, totalAmount } = body;
 
     if (!userId || !period) {
       return NextResponse.json({ success: false, error: 'Karyawan dan periode gaji wajib dipilih' }, { status: 400 });
@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
     const base = parseFloat(baseSalary) || 0;
     const oper = parseFloat(operationalAllowance) || 0;
     const bon = parseFloat(bonus) || 0;
-    const total = base + oper + bon;
+    const total = totalAmount ? parseFloat(totalAmount) : (base + oper + bon);
 
     const payroll = await prisma.payroll.create({
       data: {
@@ -72,6 +72,7 @@ export async function POST(request: NextRequest) {
         operational_allowance: oper,
         bonus: bon,
         total_amount: total,
+        breakdown: breakdown || null,
         slip_url: slipUrl || null,
         status: 'PAID',
       },
