@@ -271,6 +271,7 @@ export default function SCurvePage() {
                     projectId={selectedProject.id}
                     initialData={progressData}
                     contractValue={selectedProject.contract_value}
+                    userRole={userRole}
                     onDataUpdated={() => fetchSCurveData(selectedProject.id)}
                   />
                   <div style={{ display: 'flex', justifyContent: 'flex-start' }}>

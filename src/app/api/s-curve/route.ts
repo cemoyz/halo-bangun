@@ -170,6 +170,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
+      userRole: user.role,
       projects: allowedProjects,
       project: {
         id: project.id,
@@ -227,6 +228,157 @@ export async function POST(request: NextRequest) {
     }
 
     const contractVal = Number(project.contract_value) || 0;
+
+    // ACTION: OWNER SAVES PLANNED TARGET MATRIX (PERENCANAAN OWNER)
+    if (action === 'save_owner_plan' && Array.isArray(weeks)) {
+      if (user.role !== 'OWNER') {
+        return NextResponse.json(
+          { success: false, error: 'Hanya Direktur / Owner yang berwenang menetapkan Perencanaan Target Kurva S' },
+          { status: 403 }
+        );
+      }
+
+      const sortedWeeks = [...weeks].sort((a, b) => Number(a.week_number) - Number(b.week_number));
+      let runningPlanned = 0;
+
+      for (let i = 0; i < sortedWeeks.length; i++) {
+        const item = sortedWeeks[i];
+        const wNum = parseInt(item.week_number, 10);
+        const pPct = parseFloat(item.planned_percentage) || 0;
+        runningPlanned = parseFloat((runningPlanned + pPct).toFixed(2));
+        const pCost = (pPct / 100) * contractVal;
+
+        // Upsert without altering supervisor actual percentage
+        const existing = await prisma.sCurveProgress.findUnique({
+          where: { project_id_week_number: { project_id: pId, week_number: wNum } },
+        });
+
+        if (existing) {
+          await prisma.sCurveProgress.update({
+            where: { id: existing.id },
+            data: {
+              planned_percentage: pPct,
+              cumulative_planned: runningPlanned,
+              planned_cost: pCost,
+              notes: item.notes || existing.notes,
+              target_date: item.target_date ? new Date(item.target_date) : existing.target_date,
+            },
+          });
+        } else {
+          await prisma.sCurveProgress.create({
+            data: {
+              project_id: pId,
+              week_number: wNum,
+              planned_percentage: pPct,
+              actual_percentage: 0,
+              cumulative_planned: runningPlanned,
+              cumulative_actual: 0,
+              planned_cost: pCost,
+              actual_cost: 0,
+              status: 'IN_PROGRESS',
+              notes: item.notes || null,
+              target_date: item.target_date ? new Date(item.target_date) : null,
+            },
+          });
+        }
+      }
+
+      return NextResponse.json({
+        success: true,
+        message: `Perencanaan Target Kurva S (${sortedWeeks.length} Minggu, Kumulatif: ${runningPlanned}%) berhasil ditetapkan oleh Owner.`,
+      });
+    }
+
+    // ACTION: SUPERVISOR/PM SAVES ACTUAL WEEKLY PROGRESS REPORT (LAPORAN MINGGUAN PENGAWAS)
+    if (action === 'save_supervisor_report' && Array.isArray(weeks)) {
+      if (!['PM', 'OWNER'].includes(user.role)) {
+        return NextResponse.json(
+          { success: false, error: 'Hanya Pengawas Lapangan (PM) atau Owner yang dapat menginput Realisasi Mingguan' },
+          { status: 403 }
+        );
+      }
+
+      const sortedWeeks = [...weeks].sort((a, b) => Number(a.week_number) - Number(b.week_number));
+      let runningActual = 0;
+
+      for (let i = 0; i < sortedWeeks.length; i++) {
+        const item = sortedWeeks[i];
+        const wNum = parseInt(item.week_number, 10);
+        const aPct = parseFloat(item.actual_percentage) || 0;
+
+        if (aPct > 0 || (item.cumulative_actual && item.cumulative_actual > 0)) {
+          runningActual = parseFloat((runningActual + aPct).toFixed(2));
+        }
+
+        const aCost = (aPct / 100) * contractVal;
+
+        const existing = await prisma.sCurveProgress.findUnique({
+          where: { project_id_week_number: { project_id: pId, week_number: wNum } },
+        });
+
+        if (existing) {
+          await prisma.sCurveProgress.update({
+            where: { id: existing.id },
+            data: {
+              actual_percentage: aPct,
+              cumulative_actual: aPct > 0 ? runningActual : existing.cumulative_actual,
+              actual_cost: aCost,
+              status: item.status || existing.status,
+              notes: item.notes || existing.notes,
+            },
+          });
+        } else {
+          await prisma.sCurveProgress.create({
+            data: {
+              project_id: pId,
+              week_number: wNum,
+              planned_percentage: 0,
+              actual_percentage: aPct,
+              cumulative_planned: 0,
+              cumulative_actual: runningActual,
+              planned_cost: 0,
+              actual_cost: aCost,
+              status: item.status || 'IN_PROGRESS',
+              notes: item.notes || null,
+            },
+          });
+        }
+      }
+
+      return NextResponse.json({
+        success: true,
+        message: `Laporan Progres Mingguan Lapangan berhasil disimpan oleh Pengawas (Akumulasi Riil: ${runningActual}%).`,
+      });
+    }
+
+    // ACTION: SYNC FROM DAILY REPORTS (REKAP LAPORAN HARIAN KE MINGGUAN)
+    if (action === 'sync_daily_reports') {
+      const dailyReports = await prisma.dailyReport.findMany({
+        where: { project_id: pId },
+        include: { items: true },
+        orderBy: { day_number: 'asc' },
+      });
+
+      // Group reports by week: Week 1 (Days 1..7), Week 2 (Days 8..14), etc.
+      const weeklyProgressMap: { [week: number]: { count: number; items: string[] } } = {};
+      for (const dr of dailyReports) {
+        const day = dr.day_number || 1;
+        const weekNum = Math.ceil(day / 7);
+        if (!weeklyProgressMap[weekNum]) {
+          weeklyProgressMap[weekNum] = { count: 0, items: [] };
+        }
+        weeklyProgressMap[weekNum].count += 1;
+        for (const itm of dr.items) {
+          weeklyProgressMap[weekNum].items.push(`${itm.task_name} (${itm.status})`);
+        }
+      }
+
+      return NextResponse.json({
+        success: true,
+        message: `Terdapat ${dailyReports.length} laporan harian pengawas yang tersinkronisasi.`,
+        weeklyProgressMap,
+      });
+    }
 
     // ACTION: BATCH SAVE / SYNC ALL WEEKS
     if (action === 'batch_save' && Array.isArray(weeks)) {

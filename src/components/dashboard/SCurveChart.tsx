@@ -93,8 +93,8 @@ export const SCurveChart: React.FC<SCurveChartProps> = ({
   const chartData = data.map((d) => ({
     week: `M-${d.week_number}`,
     weekNumber: d.week_number,
-    'Target Rencana Kumulatif (%)': d.cumulative_planned,
-    'Progres Riil Kumulatif (%)': d.cumulative_actual > 0 ? d.cumulative_actual : null,
+    'Target Rencana Kumulatif (Perencanaan Owner)': d.cumulative_planned,
+    'Progres Riil Kumulatif (Laporan Pengawas)': d.cumulative_actual > 0 ? d.cumulative_actual : null,
     targetMingguan: d.planned_percentage,
     riilMingguan: d.actual_percentage,
     plannedCost: d.planned_cost,
@@ -109,8 +109,8 @@ export const SCurveChart: React.FC<SCurveChartProps> = ({
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       const pData = payload[0]?.payload;
-      const targetVal = pData['Target Rencana Kumulatif (%)'];
-      const actualVal = pData['Progres Riil Kumulatif (%)'];
+      const targetVal = pData['Target Rencana Kumulatif (Perencanaan Owner)'];
+      const actualVal = pData['Progres Riil Kumulatif (Laporan Pengawas)'];
       const dev = actualVal !== null ? parseFloat((actualVal - targetVal).toFixed(2)) : null;
 
       return (
@@ -334,7 +334,7 @@ export const SCurveChart: React.FC<SCurveChartProps> = ({
                 {/* Garis Rencana (Planned - Target): Blue line with clean round dots */}
                 <Line
                   type="monotone"
-                  dataKey="Target Rencana Kumulatif (%)"
+                  dataKey="Target Rencana Kumulatif (Perencanaan Owner)"
                   stroke="#2563eb"
                   strokeWidth={3}
                   dot={{ r: 4, fill: '#2563eb', stroke: '#ffffff', strokeWidth: 2 }}
@@ -344,7 +344,7 @@ export const SCurveChart: React.FC<SCurveChartProps> = ({
                 {/* Garis Riil (Actual - Progres Lapangan): Emerald line with distinct dots */}
                 <Line
                   type="monotone"
-                  dataKey="Progres Riil Kumulatif (%)"
+                  dataKey="Progres Riil Kumulatif (Laporan Pengawas)"
                   stroke="#10b981"
                   strokeWidth={3}
                   strokeDasharray=""
