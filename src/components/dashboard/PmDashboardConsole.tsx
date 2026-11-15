@@ -674,7 +674,7 @@ export default function PmDashboardConsole({
             onDataUpdated={() => window.location.reload()}
           />
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
             <Card>
               <CardHeader>
                 <CardTitle icon="ri-upload-cloud-line">Pembaruan Cepat / Unggah Jadwal Kerja (PDF / Excel)</CardTitle>
@@ -893,7 +893,7 @@ export default function PmDashboardConsole({
 
       {/* Tab 4: PENGADAAN MATERIAL & NOTA */}
       {activeTab === 'materials' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
           {/* Form Input Material */}
           <Card>
             <CardHeader>
@@ -1101,7 +1101,7 @@ export default function PmDashboardConsole({
 
       {/* Tab 5: INVENTARIS & SEWA ALAT */}
       {activeTab === 'equipment' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
           {/* Form Input Equipment */}
           <Card>
             <CardHeader>
@@ -1241,7 +1241,7 @@ export default function PmDashboardConsole({
 
       {/* Tab 6: PENGAJUAN ADDENDUM (COR/ADD) */}
       {activeTab === 'addendums' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
           <Card>
             <CardHeader>
               <CardTitle icon="ri-file-edit-line">Pengajuan Draf Addendum (Pekerjaan Tambah/Kurang)</CardTitle>

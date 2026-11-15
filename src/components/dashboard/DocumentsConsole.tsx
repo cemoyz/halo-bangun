@@ -740,7 +740,7 @@ export default function DocumentsConsole({
                 Sleman, {new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', textAlign: 'center' }}>
+              <div className="signature-two-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', textAlign: 'center' }}>
                 <div>
                   <div style={{ marginBottom: '8px' }}>Pihak Pertama (Pelaksana / Kontraktor),</div>
                   <div style={{ fontWeight: 'bold' }}>PT. AULIA INDOLAND GRUP</div>
@@ -1033,7 +1033,7 @@ export default function DocumentsConsole({
             </div>
 
             {/* Sign-off Form Garansi */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', textAlign: 'center', fontSize: '12px' }}>
+            <div className="signature-two-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', textAlign: 'center', fontSize: '12px' }}>
               <div>
                 <div style={{ marginBottom: '6px' }}>Pemilik Bangunan,</div>
                 <div style={{ height: '60px' }}></div>
@@ -1206,7 +1206,7 @@ export default function DocumentsConsole({
               <div style={{ textAlign: 'right', marginBottom: '16px' }}>
                 Yogyakarta, {new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', textAlign: 'center' }}>
+              <div className="signature-two-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', textAlign: 'center' }}>
                 <div>
                   <div>PIHAK PERTAMA (Pemilik),</div>
                   <div style={{ height: '70px' }}></div>
@@ -1343,7 +1343,7 @@ export default function DocumentsConsole({
                     </div>
 
                     {/* Grid 10 Penerimaan vs 8 Potongan */}
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '18px' }}>
+                    <div className="signature-two-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '18px' }}>
                       {/* 10 Penerimaan */}
                       <div style={{ background: 'rgba(34, 197, 94, 0.05)', padding: '16px', borderRadius: '8px', border: '1px solid rgba(34, 197, 94, 0.2)' }}>
                         <h4 style={{ fontSize: '13px', fontWeight: 700, color: '#166534', margin: '0 0 12px 0' }}>
@@ -1515,7 +1515,7 @@ export default function DocumentsConsole({
             </div>
 
             {/* Employee Metadata */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '14px', fontSize: '12px' }}>
+            <div className="signature-two-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '14px', fontSize: '12px' }}>
               <div>
                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                   <tbody>
@@ -1563,6 +1563,7 @@ export default function DocumentsConsole({
 
             {/* Two-Column Grid: Penerimaan vs Potongan */}
             <div
+              className="slip-two-column-grid"
               style={{
                 display: 'grid',
                 gridTemplateColumns: '1.2fr 1fr',

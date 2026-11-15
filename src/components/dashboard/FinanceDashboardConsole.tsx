@@ -514,7 +514,7 @@ export default function FinanceDashboardConsole({
 
       {/* Tab 2: KALKULATOR ALOKASI PROYEK (FR-18) */}
       {activeTab === 'allocator' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
           {/* Form Kalkulator */}
           <Card>
             <CardHeader>
@@ -1002,7 +1002,7 @@ export default function FinanceDashboardConsole({
 
       {/* Tab 6: MANAJEMEN PAYROLL PEGAWAI */}
       {activeTab === 'payroll' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
           {/* Form Buat Slip Gaji */}
           <Card>
             <CardHeader>

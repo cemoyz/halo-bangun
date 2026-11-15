@@ -178,6 +178,7 @@ export default function ClientDashboardConsole({ project, allProjects = [], user
       {/* Project Switcher Bar if Multiple Projects */}
       {allProjects && allProjects.length > 1 && (
         <div
+          className="dash-project-switcher"
           style={{
             background: 'var(--dash-card-bg)',
             border: '1px solid var(--dash-border)',
@@ -256,7 +257,7 @@ export default function ClientDashboardConsole({ project, allProjects = [], user
       )}
 
       {/* KPI Stats Row */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
+      <div className="dash-kpi-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
         <Card>
           <CardContent style={{ padding: '20px' }}>
             <div style={{ fontSize: '12px', color: 'var(--dash-text-muted)', fontWeight: 600 }}>PROGRES RIIL KURVA S</div>
@@ -296,11 +297,13 @@ export default function ClientDashboardConsole({ project, allProjects = [], user
 
       {/* Tabs Bar */}
       <div
+        className="dash-tabs-scroll"
         style={{
           display: 'flex',
           gap: '8px',
           overflowX: 'auto',
           paddingBottom: '4px',
+          WebkitOverflowScrolling: 'touch',
         }}
       >
         {[

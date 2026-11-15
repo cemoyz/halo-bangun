@@ -210,6 +210,7 @@ export const DailyReportFeed: React.FC<DailyReportFeedProps> = ({
                     </div>
 
                     <div
+                      className="daily-photos-grid"
                       style={{
                         display: 'grid',
                         gridTemplateColumns: `repeat(${Math.min(report.photos.length, 3)}, 1fr)`,

@@ -103,6 +103,7 @@ export default async function DashboardMainPage() {
 
       {/* Top Metric Cards */}
       <div
+        className="dash-kpi-grid"
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
@@ -266,7 +267,7 @@ export default async function DashboardMainPage() {
             </Link>
           </CardHeader>
           <CardContent style={{ padding: 0 }}>
-            <div style={{ overflowX: 'auto' }}>
+            <div className="dash-table-responsive" style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '13px' }}>
                 <thead>
                   <tr style={{ background: 'var(--dash-muted-bg)', borderBottom: '1px solid var(--dash-border)' }}>

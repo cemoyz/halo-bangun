@@ -400,6 +400,7 @@ export default function DashboardLayout({ children, title = 'Dashboard' }: Dashb
       >
         {/* Topbar */}
         <header
+          className="dash-topbar-header"
           style={{
             height: '70px',
             background: 'var(--dash-topbar-bg, var(--dash-card-bg))',
@@ -415,7 +416,7 @@ export default function DashboardLayout({ children, title = 'Dashboard' }: Dashb
           }}
         >
           {/* Left: Mobile Toggle & Page Info */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', minWidth: 0 }}>
             <button
               onClick={() => setIsMobileMenuOpen(true)}
               className="d-lg-none"
@@ -431,6 +432,7 @@ export default function DashboardLayout({ children, title = 'Dashboard' }: Dashb
                 justifyContent: 'center',
                 fontSize: '18px',
                 cursor: 'pointer',
+                flexShrink: 0,
               }}
             >
               <i className="ri-menu-line" />
@@ -451,17 +453,18 @@ export default function DashboardLayout({ children, title = 'Dashboard' }: Dashb
                 justifyContent: 'center',
                 fontSize: '18px',
                 cursor: 'pointer',
+                flexShrink: 0,
               }}
               title={isCollapsed ? 'Perluas Sidebar' : 'Ciutkan Sidebar'}
             >
               <i className={isCollapsed ? 'ri-menu-unfold-line' : 'ri-menu-fold-line'} />
             </button>
 
-            <div>
-              <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--dash-text-main)', lineHeight: 1.2 }}>
+            <div style={{ minWidth: 0 }}>
+              <div className="dash-topbar-title" style={{ fontSize: '15px', fontWeight: 700, color: 'var(--dash-text-main)', lineHeight: 1.2 }}>
                 {title}
               </div>
-              <div style={{ fontSize: '11px', color: 'var(--dash-text-muted)' }}>
+              <div style={{ fontSize: '11px', color: 'var(--dash-text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 Halo Bangun • {roleCfg.label}
               </div>
             </div>
@@ -693,6 +696,7 @@ export default function DashboardLayout({ children, title = 'Dashboard' }: Dashb
 
         {/* Page Body */}
         <main
+          className="dash-page-body"
           style={{
             flex: 1,
             padding: '24px',
@@ -713,6 +717,44 @@ export default function DashboardLayout({ children, title = 'Dashboard' }: Dashb
           }
           .dash-main-container {
             margin-left: ${isCollapsed ? '78px' : '270px'} !important;
+          }
+        }
+        @media (max-width: 991px) {
+          .dash-sidebar-desktop {
+            width: 280px !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45) !important;
+          }
+          .dash-main-container {
+            margin-left: 0 !important;
+            width: 100% !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .dash-topbar-header {
+            height: 60px !important;
+            padding: 0 14px !important;
+          }
+          .dash-topbar-title {
+            max-width: 170px !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            white-space: nowrap !important;
+            font-size: 13.5px !important;
+          }
+          .dash-page-body {
+            padding: 14px 12px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .dash-topbar-header {
+            padding: 0 10px !important;
+          }
+          .dash-topbar-title {
+            max-width: 120px !important;
+            font-size: 12.5px !important;
+          }
+          .dash-page-body {
+            padding: 10px 8px !important;
           }
         }
       `}</style>

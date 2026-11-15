@@ -214,7 +214,7 @@ export const SCurveChart: React.FC<SCurveChartProps> = ({
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       {showSummaryCards && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
+        <div className="dash-kpi-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
           {/* Card 1: Realisasi Fisik */}
           <Card>
             <CardContent style={{ padding: '16px 20px' }}>
@@ -300,9 +300,9 @@ export const SCurveChart: React.FC<SCurveChartProps> = ({
           </div>
         </CardHeader>
         <CardContent style={{ padding: '24px 20px 20px 10px' }}>
-          <div style={{ width: '100%', height: '380px' }}>
+          <div className="dash-scurve-chart-box" style={{ width: '100%', height: '380px' }}>
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={chartData} margin={{ top: 15, right: 30, left: 0, bottom: 10 }}>
+              <LineChart data={chartData} margin={{ top: 15, right: 15, left: -10, bottom: 10 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--dash-border, #e2e8f0)" opacity={0.7} />
                 <XAxis
                   dataKey="week"

@@ -297,7 +297,8 @@ export const PaymentScheduleTable: React.FC<PaymentScheduleTableProps> = ({
         </CardHeader>
 
         <CardContent style={{ padding: '20px' }}>
-          <div style={{ overflowX: 'auto', border: '1px solid var(--dash-border)', borderRadius: '10px' }}>
+          {/* Desktop Table View */}
+          <div className="dash-desktop-table" style={{ overflowX: 'auto', border: '1px solid var(--dash-border)', borderRadius: '10px' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', textAlign: 'left' }}>
               <thead>
                 <tr style={{ background: 'var(--dash-muted-bg)', borderBottom: '2px solid var(--dash-border)' }}>
@@ -525,6 +526,173 @@ export const PaymentScheduleTable: React.FC<PaymentScheduleTableProps> = ({
                 )}
               </tbody>
             </table>
+          </div>
+
+          {/* Mobile Card List View (< 768px) */}
+          <div className="dash-mobile-cards d-none">
+            {payments.length === 0 ? (
+              <div style={{ padding: '24px', textAlign: 'center', color: 'var(--dash-text-muted)' }}>
+                Belum ada jadwal termin tagihan untuk proyek ini.
+              </div>
+            ) : (
+              payments.map((p, idx) => {
+                const isPaid = p.status === 'PAID';
+                const isPending = p.status === 'PENDING_VERIFICATION';
+                const isRejected = p.status === 'REJECTED';
+                const isUnpaid = p.status === 'UNPAID';
+
+                return (
+                  <div key={p.id} className="dash-mobile-card-item">
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px' }}>
+                      <div>
+                        <div style={{ fontSize: '11px', color: 'var(--dash-text-muted)', fontWeight: 700 }}>
+                          TERMIN #{p.termin_number || idx + 1} • {p.percentage ? `${p.percentage}%` : '-'}
+                        </div>
+                        <div style={{ fontSize: '15px', fontWeight: 800, color: 'var(--dash-text-main)', marginTop: '2px' }}>
+                          {p.termin_name}
+                        </div>
+                      </div>
+                      <div>
+                        {isPaid && (
+                          <Badge variant="success">
+                            <i className="ri-checkbox-circle-line" /> Lunas
+                          </Badge>
+                        )}
+                        {isPending && (
+                          <Badge variant="warning">
+                            <i className="ri-time-line" /> Verifikasi
+                          </Badge>
+                        )}
+                        {isUnpaid && (
+                          <Badge variant="neutral">
+                            <i className="ri-error-warning-line" /> Belum Bayar
+                          </Badge>
+                        )}
+                        {isRejected && (
+                          <Badge variant="danger">
+                            <i className="ri-close-circle-line" /> Ditolak
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 12px', background: 'var(--dash-muted-bg)', borderRadius: '8px' }}>
+                      <div>
+                        <div style={{ fontSize: '11px', color: 'var(--dash-text-muted)' }}>Nominal:</div>
+                        <div style={{ fontSize: '16px', fontWeight: 800, color: isPaid ? '#10b981' : '#f97316' }}>
+                          {formatIDR(p.amount)}
+                        </div>
+                      </div>
+                      <div style={{ textAlign: 'right' }}>
+                        <div style={{ fontSize: '11px', color: 'var(--dash-text-muted)' }}>Jatuh Tempo:</div>
+                        <div style={{ fontSize: '12px', fontWeight: 600 }}>{formatDateID(p.due_date)}</div>
+                      </div>
+                    </div>
+
+                    {isRejected && p.rejection_reason && (
+                      <div style={{ fontSize: '11.5px', color: '#ef4444', background: 'rgba(239, 68, 68, 0.08)', padding: '8px 10px', borderRadius: '6px' }}>
+                        ⚠ Alasan Penolakan: {p.rejection_reason}
+                      </div>
+                    )}
+
+                    {/* Bukti & Kwitansi */}
+                    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', fontSize: '12px' }}>
+                      {p.proof_url && (
+                        <a
+                          href={formatSafeImageUrl(p.proof_url)}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{ color: '#2563eb', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                        >
+                          <i className="ri-image-line" /> Bukti Transfer
+                        </a>
+                      )}
+                      {p.receipt_url && (
+                        <a
+                          href={p.receipt_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{ color: '#10b981', textDecoration: 'none', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                        >
+                          <i className="ri-file-text-line" /> Kwitansi Resmi
+                        </a>
+                      )}
+                    </div>
+
+                    {/* Actions */}
+                    <div style={{ display: 'flex', gap: '8px', marginTop: '4px', flexWrap: 'wrap' }}>
+                      {isClient && (isUnpaid || isRejected) && (
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          style={{ flex: 1 }}
+                          onClick={() => {
+                            setSelectedPayment(p);
+                            setActiveModal('upload');
+                          }}
+                          icon="ri-upload-2-line"
+                        >
+                          {isRejected ? 'Unggah Ulang Bukti' : 'Upload Bukti'}
+                        </Button>
+                      )}
+
+                      {isClient && isPaid && (
+                        <a
+                          href={p.receipt_url || '/main-assets/docs/Kwitansi-Resmi-DP-HaloBangun.pdf'}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{ flex: 1, textDecoration: 'none' }}
+                        >
+                          <Button variant="success" size="sm" style={{ width: '100%' }} icon="ri-download-2-line">
+                            Download Kwitansi
+                          </Button>
+                        </a>
+                      )}
+
+                      {isFinanceOrOwner && isPending && (
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          style={{ flex: 1 }}
+                          onClick={() => {
+                            setSelectedPayment(p);
+                            setActiveModal('verify');
+                          }}
+                          icon="ri-check-double-line"
+                        >
+                          Verifikasi Bayar
+                        </Button>
+                      )}
+
+                      {isFinanceOrOwner && isPaid && (
+                        <a
+                          href={p.receipt_url || '/main-assets/docs/Kwitansi-Resmi-DP-HaloBangun.pdf'}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{ flex: 1, textDecoration: 'none' }}
+                        >
+                          <Button variant="outline" size="sm" style={{ width: '100%' }} icon="ri-eye-line">
+                            Lihat Kwitansi
+                          </Button>
+                        </a>
+                      )}
+
+                      {isFinanceOrOwner && !isPaid && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleDeleteTermin(p.id, p.termin_name)}
+                          icon="ri-delete-bin-line"
+                          style={{ color: '#ef4444' }}
+                        >
+                          Hapus
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                );
+              })
+            )}
           </div>
         </CardContent>
       </Card>

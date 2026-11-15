@@ -145,6 +145,7 @@ export default function SCurvePage() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           {/* Header Controls & Project Selector */}
           <div
+            className="dash-project-switcher"
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -157,7 +158,7 @@ export default function SCurvePage() {
               border: '1px solid var(--dash-border)',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap', width: '100%', maxWidth: '100%' }}>
               <span style={{ fontSize: '13px', fontWeight: 700, color: 'var(--dash-text-main)' }}>
                 Pilih Proyek:
               </span>
@@ -173,7 +174,8 @@ export default function SCurvePage() {
                   color: 'var(--dash-text-main)',
                   fontSize: '13px',
                   fontWeight: 600,
-                  minWidth: '280px',
+                  maxWidth: '100%',
+                  flex: 1,
                 }}
               >
                 {projects.map((p) => (

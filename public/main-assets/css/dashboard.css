@@ -1353,5 +1353,100 @@ button.dash-btn-danger {
   }
 }
 
+/* ============================================================
+   Universal Mobile Responsiveness for All Dashboards
+   ============================================================ */
+.dash-table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  /* Printable Documents (BAST, Warranty, SPKPR, Slip Gaji) */
+  .printable-doc {
+    padding: 24px 16px !important;
+    font-size: 12.5px !important;
+    border-radius: 8px !important;
+  }
+  .printable-doc h2,
+  .printable-doc h3 {
+    font-size: 15px !important;
+  }
+  .printable-doc table {
+    font-size: 11.5px !important;
+  }
+
+  /* Two column slip gaji stack to single column on mobile */
+  .slip-two-column-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .slip-two-column-grid > div:first-child {
+    border-right: none !important;
+    border-bottom: 1px solid #000 !important;
+  }
+
+  /* Signature columns stack vertically */
+  .signature-two-col {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  /* Project Switcher Bar */
+  .dash-project-switcher {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .dash-project-switcher select {
+    width: 100% !important;
+  }
+
+  /* KPI Grid */
+  .dash-kpi-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  /* Daily report photo grid */
+  .daily-photos-grid {
+    gap: 8px !important;
+  }
+  .daily-photos-grid img {
+    height: 90px !important;
+  }
+
+  /* Recharts Responsive */
+  .recharts-wrapper {
+    max-width: 100% !important;
+  }
+  .recharts-legend-wrapper {
+    position: static !important;
+    margin-bottom: 8px !important;
+    font-size: 10.5px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .printable-doc {
+    padding: 16px 10px !important;
+    font-size: 11.5px !important;
+  }
+  .printable-doc table {
+    font-size: 10.5px !important;
+  }
+  .printable-doc td {
+    padding: 2px 4px !important;
+  }
+
+  .daily-photos-grid img {
+    height: 75px !important;
+  }
+
+  .dash-kpi-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
 
 
