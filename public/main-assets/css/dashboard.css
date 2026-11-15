@@ -1576,26 +1576,184 @@ button.dash-btn-danger {
     gap: 6px !important;
   }
   .dash-tabs-responsive-grid .dash-tab-btn {
-    font-size: 13px !important;
-    padding: 11px 14px !important;
-    min-height: 44px !important;
+    font-size: 11.5px !important;
+    padding: 9px 12px !important;
+    min-height: 38px !important;
     justify-content: flex-start !important;
     text-align: left !important;
   }
 }
 
 .mandor-tabs-responsive {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  background: var(--dash-muted-bg);
-  padding: 4px;
-  border-radius: 12px;
-  border: 1px solid var(--dash-border);
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 6px !important;
+  background: var(--dash-muted-bg) !important;
+  padding: 4px !important;
+  border-radius: 10px !important;
+  border: 1px solid var(--dash-border) !important;
 }
-@media (max-width: 640px) {
+
+/* ============================================================
+   Proportional Mobile Typography & Compact Scaling (<= 768px & <= 480px)
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Page Header & Breadcrumbs */
+  .dash-page-header-container,
+  .dash-page-header {
+    margin-bottom: 14px !important;
+    gap: 8px !important;
+  }
+
+  .dash-breadcrumb {
+    font-size: 11px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .dash-page-title,
+  h1.dash-page-title,
+  .dash-content h1 {
+    font-size: 16.5px !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.2px !important;
+    font-weight: 800 !important;
+  }
+
+  .dash-page-subtitle,
+  p.dash-page-subtitle,
+  .dash-content .dash-page-subtitle {
+    font-size: 11.5px !important;
+    line-height: 1.35 !important;
+    margin-top: 2px !important;
+  }
+
+  /* Card Headings & Content */
+  .dash-card-title,
+  h3.dash-card-title,
+  .dash-card h3 {
+    font-size: 13.5px !important;
+    line-height: 1.25 !important;
+  }
+
+  .dash-card-description {
+    font-size: 11px !important;
+    line-height: 1.35 !important;
+  }
+
+  .dash-card-header {
+    padding: 12px 14px !important;
+    gap: 8px !important;
+  }
+
+  .dash-card-content {
+    padding: 14px 12px !important;
+  }
+
+  /* Topbar Mobile Sizing */
+  .dash-topbar-header {
+    height: 56px !important;
+    padding: 0 12px !important;
+  }
+
+  .dash-topbar-title {
+    font-size: 13.5px !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Stat & KPI Values */
+  .dash-stat-value,
+  .dash-stat-number,
+  .dash-kpi-val {
+    font-size: 18px !important;
+    line-height: 1.2 !important;
+  }
+
+  .dash-stat-label,
+  .dash-kpi-lbl {
+    font-size: 10.5px !important;
+  }
+
+  /* Tab Buttons on Mobile */
+  .dash-tabs-responsive-grid .dash-tab-btn {
+    font-size: 11.5px !important;
+    padding: 8px 6px !important;
+    min-height: 38px !important;
+  }
+
+  .dash-tabs-responsive-grid .dash-tab-btn i {
+    font-size: 13px !important;
+  }
+
+  /* Mobile Card Items (Tables as Cards) */
+  .dash-mobile-card-item {
+    padding: 11px 12px !important;
+    gap: 8px !important;
+    font-size: 12px !important;
+  }
+
+  .dash-mobile-card-item .card-title {
+    font-size: 13px !important;
+  }
+
+  /* Badges */
+  .dash-badge {
+    font-size: 10px !important;
+    padding: 2px 6px !important;
+  }
+
+  /* Buttons */
+  .dash-btn {
+    font-size: 12px !important;
+    padding: 7px 12px !important;
+  }
+
+  /* Mandor KPIs & Buttons */
+  .mandor-kpi-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+  }
+  .mandor-kpi-card {
+    padding: 8px 4px !important;
+  }
   .mandor-tabs-responsive {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 4px !important;
+    padding: 3px !important;
+  }
+  .mandor-tabs-responsive button {
+    padding: 6px 2px !important;
+    font-size: 10.5px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .dash-page-title,
+  h1.dash-page-title,
+  .dash-content h1 {
+    font-size: 15px !important;
+    line-height: 1.25 !important;
+  }
+
+  .dash-page-subtitle,
+  p.dash-page-subtitle {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+  }
+
+  .dash-stat-value,
+  .dash-stat-number,
+  .dash-kpi-val {
+    font-size: 16px !important;
+  }
+
+  .dash-topbar-title {
+    font-size: 12.5px !important;
+  }
+
+  .dash-tabs-responsive-grid .dash-tab-btn {
+    font-size: 11px !important;
+    padding: 6px 8px !important;
+    min-height: 34px !important;
   }
 }
 

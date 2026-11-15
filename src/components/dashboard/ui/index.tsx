@@ -294,25 +294,27 @@ export const PageHeader: React.FC<{
   action?: React.ReactNode;
 }> = ({ title, subtitle, breadcrumb, action }) => (
   <div
+    className="dash-page-header-container"
     style={{
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
       gap: '16px',
-      marginBottom: '24px',
+      marginBottom: '20px',
       flexWrap: 'wrap',
     }}
   >
     <div>
       {breadcrumb && (
-        <div style={{ fontSize: '12px', color: 'var(--dash-text-muted)', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <div className="dash-breadcrumb" style={{ fontSize: '12px', color: 'var(--dash-text-muted)', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
           <span>Halo Bangun</span>
           <span>/</span>
           <span style={{ color: '#f97316', fontWeight: 600 }}>{breadcrumb}</span>
         </div>
       )}
       <h1
+        className="dash-page-title"
         style={{
           fontSize: '22px',
           fontWeight: 800,
@@ -325,6 +327,7 @@ export const PageHeader: React.FC<{
       </h1>
       {subtitle && (
         <p
+          className="dash-page-subtitle"
           style={{
             fontSize: '13px',
             color: 'var(--dash-text-muted)',
@@ -335,7 +338,7 @@ export const PageHeader: React.FC<{
         </p>
       )}
     </div>
-    {action && <div>{action}</div>}
+    {action && <div className="dash-page-action-wrapper">{action}</div>}
   </div>
 );
 

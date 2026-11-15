@@ -99,86 +99,102 @@ export default function MandorFieldConsole({
         </div>
       )}
 
-      {/* Mobile Top KPI Cards (Large, Touch-Friendly) */}
+      {/* Mobile Top KPI Cards (Compact 3-Column Grid) */}
       <div
+        className="mandor-kpi-grid"
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
-          gap: '12px',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '8px',
         }}
       >
         <div
+          className="mandor-kpi-card"
           style={{
             background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
             color: '#fff',
-            borderRadius: '14px',
-            padding: '16px',
-            boxShadow: '0 4px 12px rgba(249, 115, 22, 0.25)',
+            borderRadius: '10px',
+            padding: '10px 6px',
+            boxShadow: '0 2px 8px rgba(249, 115, 22, 0.25)',
+            textAlign: 'center',
           }}
         >
-          <div style={{ fontSize: '20px', marginBottom: '6px' }}>
+          <div style={{ fontSize: '16px', marginBottom: '2px' }}>
             <i className="ri-team-line" />
           </div>
-          <div style={{ fontSize: '11px', opacity: 0.9 }}>Tukang Lapangan</div>
-          <div style={{ fontSize: '22px', fontWeight: 800 }}>12 - 14 Org</div>
+          <div style={{ fontSize: '10px', opacity: 0.9, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            Tukang
+          </div>
+          <div style={{ fontSize: '14.5px', fontWeight: 800, whiteSpace: 'nowrap' }}>
+            12 - 14 Org
+          </div>
         </div>
 
         <div
+          className="mandor-kpi-card"
           style={{
             background: 'var(--dash-card-bg)',
             border: '1px solid var(--dash-border)',
-            borderRadius: '14px',
-            padding: '16px',
+            borderRadius: '10px',
+            padding: '10px 6px',
+            textAlign: 'center',
           }}
         >
-          <div style={{ fontSize: '20px', color: '#0ea5e9', marginBottom: '6px' }}>
+          <div style={{ fontSize: '16px', color: '#0ea5e9', marginBottom: '2px' }}>
             <i className="ri-tools-line" />
           </div>
-          <div style={{ fontSize: '11px', color: 'var(--dash-text-muted)' }}>Alat Kerja Proyek</div>
-          <div style={{ fontSize: '22px', fontWeight: 800, color: 'var(--dash-text-main)' }}>
+          <div style={{ fontSize: '10px', color: 'var(--dash-text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            Alat Kerja
+          </div>
+          <div style={{ fontSize: '14.5px', fontWeight: 800, color: 'var(--dash-text-main)', whiteSpace: 'nowrap' }}>
             {equipment.length} Unit
           </div>
         </div>
 
         <div
+          className="mandor-kpi-card"
           style={{
             background: 'var(--dash-card-bg)',
             border: '1px solid var(--dash-border)',
-            borderRadius: '14px',
-            padding: '16px',
+            borderRadius: '10px',
+            padding: '10px 6px',
+            textAlign: 'center',
           }}
         >
-          <div style={{ fontSize: '20px', color: '#10b981', marginBottom: '6px' }}>
+          <div style={{ fontSize: '16px', color: '#10b981', marginBottom: '2px' }}>
             <i className="ri-wallet-3-line" />
           </div>
-          <div style={{ fontSize: '11px', color: 'var(--dash-text-muted)' }}>Upah Terakhir</div>
-          <div style={{ fontSize: '18px', fontWeight: 800, color: '#10b981' }}>
+          <div style={{ fontSize: '10px', color: 'var(--dash-text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            Upah Terakhir
+          </div>
+          <div style={{ fontSize: '14.5px', fontWeight: 800, color: '#10b981', whiteSpace: 'nowrap' }}>
             {payrolls[0] ? formatIDR(payrolls[0].total_amount) : 'Lunas'}
           </div>
         </div>
       </div>
 
-      {/* Big Action Button for Field Worker */}
+      {/* Action Button for Field Worker */}
       <button
         onClick={() => setShowReqModal(true)}
+        className="mandor-action-btn"
         style={{
           width: '100%',
-          padding: '14px 20px',
-          borderRadius: '12px',
+          padding: '10px 14px',
+          borderRadius: '10px',
           background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
           color: '#ffffff',
           border: 'none',
-          fontSize: '14px',
+          fontSize: '12.5px',
           fontWeight: 700,
           cursor: 'pointer',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: '10px',
-          boxShadow: '0 4px 14px rgba(249, 115, 22, 0.35)',
+          gap: '8px',
+          boxShadow: '0 3px 10px rgba(249, 115, 22, 0.3)',
         }}
       >
-        <i className="ri-shopping-basket-line" style={{ fontSize: '20px' }} />
+        <i className="ri-shopping-basket-line" style={{ fontSize: '16px' }} />
         + Request Kebutuhan Material Mendesak ke PM
       </button>
 
@@ -303,66 +319,69 @@ export default function MandorFieldConsole({
         <button
           onClick={() => setActiveTab('photos')}
           style={{
-            padding: '10px 8px',
+            padding: '7px 4px',
             borderRadius: '8px',
             border: 'none',
             background: activeTab === 'photos' ? 'var(--dash-card-bg)' : 'transparent',
             color: activeTab === 'photos' ? '#f97316' : 'var(--dash-text-muted)',
             fontWeight: activeTab === 'photos' ? 800 : 600,
-            fontSize: '12.5px',
+            fontSize: '11px',
             cursor: 'pointer',
             boxShadow: activeTab === 'photos' ? 'var(--dash-shadow-sm)' : 'none',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '6px',
+            gap: '4px',
+            whiteSpace: 'nowrap',
           }}
         >
-          <i className="ri-image-line" />
+          <i className="ri-image-line" style={{ fontSize: '13px' }} />
           <span>Foto Lapangan</span>
         </button>
 
         <button
           onClick={() => setActiveTab('materials')}
           style={{
-            padding: '10px 8px',
+            padding: '7px 4px',
             borderRadius: '8px',
             border: 'none',
             background: activeTab === 'materials' ? 'var(--dash-card-bg)' : 'transparent',
             color: activeTab === 'materials' ? '#f97316' : 'var(--dash-text-muted)',
             fontWeight: activeTab === 'materials' ? 800 : 600,
-            fontSize: '12.5px',
+            fontSize: '11px',
             cursor: 'pointer',
             boxShadow: activeTab === 'materials' ? 'var(--dash-shadow-sm)' : 'none',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '6px',
+            gap: '4px',
+            whiteSpace: 'nowrap',
           }}
         >
-          <i className="ri-tools-line" />
+          <i className="ri-tools-line" style={{ fontSize: '13px' }} />
           <span>Material & Alat</span>
         </button>
 
         <button
           onClick={() => setActiveTab('payroll')}
           style={{
-            padding: '10px 8px',
+            padding: '7px 4px',
             borderRadius: '8px',
             border: 'none',
             background: activeTab === 'payroll' ? 'var(--dash-card-bg)' : 'transparent',
             color: activeTab === 'payroll' ? '#f97316' : 'var(--dash-text-muted)',
             fontWeight: activeTab === 'payroll' ? 800 : 600,
-            fontSize: '12.5px',
+            fontSize: '11px',
             cursor: 'pointer',
             boxShadow: activeTab === 'payroll' ? 'var(--dash-shadow-sm)' : 'none',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '6px',
+            gap: '4px',
+            whiteSpace: 'nowrap',
           }}
         >
-          <i className="ri-bill-line" />
+          <i className="ri-bill-line" style={{ fontSize: '13px' }} />
           <span>Slip Upah</span>
         </button>
       </div>
