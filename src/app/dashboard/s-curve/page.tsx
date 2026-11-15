@@ -323,7 +323,8 @@ export default function SCurvePage() {
                     </Button>
                   </CardHeader>
                   <CardContent style={{ padding: '20px' }}>
-                    <div style={{ overflowX: 'auto', border: '1px solid var(--dash-border)', borderRadius: '10px' }}>
+                    {/* Desktop Table View */}
+                    <div className="dash-desktop-table" style={{ overflowX: 'auto', border: '1px solid var(--dash-border)', borderRadius: '10px' }}>
                       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px', textAlign: 'left' }}>
                         <thead>
                           <tr style={{ background: 'var(--dash-muted-bg)', borderBottom: '2px solid var(--dash-border)' }}>
@@ -406,6 +407,79 @@ export default function SCurvePage() {
                           })}
                         </tbody>
                       </table>
+                    </div>
+
+                    {/* Mobile Card List View (<= 768px) */}
+                    <div className="dash-mobile-cards">
+                      {progressData.map((w) => {
+                        const dev = parseFloat((w.cumulative_actual - w.cumulative_planned).toFixed(2));
+                        const hasActual = w.cumulative_actual > 0;
+
+                        return (
+                          <div key={w.week_number} className="dash-mobile-card-item">
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <span style={{ fontSize: '15px', fontWeight: 800, color: 'var(--dash-text-main)' }}>
+                                Minggu ke-{w.week_number}
+                              </span>
+                              <Badge
+                                variant={
+                                  w.status === 'COMPLETED'
+                                    ? 'success'
+                                    : w.status === 'ON_HOLD'
+                                    ? 'danger'
+                                    : 'warning'
+                                }
+                              >
+                                {w.status || 'IN_PROGRESS'}
+                              </Badge>
+                            </div>
+
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', padding: '10px 12px', background: 'var(--dash-muted-bg)', borderRadius: '8px', fontSize: '12px' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <span style={{ color: 'var(--dash-text-muted)' }}>Rencana Mingguan:</span>
+                                <span style={{ fontWeight: 600 }}>{w.planned_percentage}%</span>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <span style={{ color: 'var(--dash-text-muted)' }}>Riil Lapangan:</span>
+                                <span style={{ fontWeight: 700, color: hasActual ? '#10b981' : 'inherit' }}>
+                                  {hasActual ? `${w.actual_percentage}%` : '-'}
+                                </span>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <span style={{ color: 'var(--dash-text-muted)' }}>Kum. Rencana vs Riil:</span>
+                                <span style={{ fontWeight: 700 }}>
+                                  <span style={{ color: '#2563eb' }}>{w.cumulative_planned}%</span> / <span style={{ color: '#10b981' }}>{hasActual ? `${w.cumulative_actual}%` : '-'}</span>
+                                </span>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <span style={{ color: 'var(--dash-text-muted)' }}>Deviasi:</span>
+                                <span>
+                                  {hasActual ? (
+                                    <strong style={{ color: dev > 0.5 ? '#10b981' : dev < -0.5 ? '#ef4444' : '#2563eb' }}>
+                                      {dev > 0 ? `+${dev}%` : `${dev}%`}
+                                    </strong>
+                                  ) : (
+                                    '-'
+                                  )}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', paddingTop: '2px' }}>
+                              <span style={{ color: 'var(--dash-text-muted)' }}>Biaya Riil:</span>
+                              <span style={{ fontWeight: 700, color: '#f97316' }}>
+                                {hasActual ? formatIDR(w.actual_cost) : formatIDR(w.planned_cost)}
+                              </span>
+                            </div>
+
+                            {w.notes && (
+                              <div style={{ fontSize: '11.5px', color: 'var(--dash-text-muted)', borderTop: '1px dashed var(--dash-border)', paddingTop: '6px' }}>
+                                <i>Catatan: {w.notes}</i>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
                   </CardContent>
                 </Card>

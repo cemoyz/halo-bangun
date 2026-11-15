@@ -1038,7 +1038,8 @@ export default function PmDashboardConsole({
               <CardTitle icon="ri-file-text-line">Daftar Pembelian Material Terkini</CardTitle>
             </CardHeader>
             <CardContent style={{ padding: 0 }}>
-              <div style={{ overflowX: 'auto', maxHeight: '500px' }}>
+              {/* Desktop Table View */}
+              <div className="dash-desktop-table" style={{ overflowX: 'auto', maxHeight: '500px' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px', textAlign: 'left' }}>
                   <thead>
                     <tr style={{ background: 'var(--dash-muted-bg)', borderBottom: '1px solid var(--dash-border)' }}>
@@ -1080,6 +1081,55 @@ export default function PmDashboardConsole({
                     ))}
                   </tbody>
                 </table>
+              </div>
+
+              {/* Mobile Card List View (<= 768px) */}
+              <div className="dash-mobile-cards">
+                {materials.length === 0 ? (
+                  <div style={{ padding: '24px', textAlign: 'center', color: 'var(--dash-text-muted)' }}>
+                    Belum ada pembelian material.
+                  </div>
+                ) : (
+                  materials.map((m) => (
+                    <div key={m.id} className="dash-mobile-card-item">
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px' }}>
+                        <div>
+                          <div style={{ fontSize: '15px', fontWeight: 800, color: 'var(--dash-text-main)' }}>
+                            {m.item_name}
+                          </div>
+                          <div style={{ fontSize: '12px', color: 'var(--dash-text-muted)', marginTop: '2px' }}>
+                            Jumlah: <b>{m.quantity}</b>
+                          </div>
+                        </div>
+                        <span style={{ fontSize: '14px', fontWeight: 800, color: '#f97316' }}>
+                          {formatIDR(m.total_price)}
+                        </span>
+                      </div>
+
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', background: 'var(--dash-muted-bg)', borderRadius: '8px', fontSize: '12px' }}>
+                        <span style={{ color: 'var(--dash-text-muted)' }}>Toko & Kontak:</span>
+                        <span style={{ fontWeight: 600 }}>
+                          {m.store_name} {m.store_wa && <span style={{ color: '#10b981' }}>({m.store_wa})</span>}
+                        </span>
+                      </div>
+
+                      <div style={{ display: 'flex', justifyContent: 'flex-end', paddingTop: '2px' }}>
+                        {m.receipt_url ? (
+                          <a
+                            href={m.receipt_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{ color: '#f97316', fontWeight: 700, fontSize: '13px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                          >
+                            <i className="ri-file-text-line" /> Lihat Foto Nota ↗
+                          </a>
+                        ) : (
+                          <span style={{ fontSize: '12px', color: 'var(--dash-text-muted)' }}>Tidak ada foto nota</span>
+                        )}
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </CardContent>
           </Card>
@@ -1328,7 +1378,8 @@ export default function PmDashboardConsole({
             <Badge variant="success">Pribadi</Badge>
           </CardHeader>
           <CardContent style={{ padding: 0 }}>
-            <div style={{ overflowX: 'auto' }}>
+            {/* Desktop Table View */}
+            <div className="dash-desktop-table" style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '13px' }}>
                 <thead>
                   <tr style={{ background: 'var(--dash-muted-bg)', borderBottom: '1px solid var(--dash-border)' }}>
@@ -1369,6 +1420,63 @@ export default function PmDashboardConsole({
                   ))}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile Card List View (<= 768px) */}
+            <div className="dash-mobile-cards">
+              {initialPayrolls.length === 0 ? (
+                <div style={{ padding: '24px', textAlign: 'center', color: 'var(--dash-text-muted)' }}>
+                  Belum ada catatan slip gaji.
+                </div>
+              ) : (
+                initialPayrolls.map((p) => (
+                  <div key={p.id} className="dash-mobile-card-item">
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px' }}>
+                      <div>
+                        <div style={{ fontSize: '15px', fontWeight: 800, color: 'var(--dash-text-main)' }}>
+                          Periode: {p.period}
+                        </div>
+                        <div style={{ fontSize: '11px', color: 'var(--dash-text-muted)', marginTop: '2px' }}>
+                          Supervisi & Pengawasan Lapangan
+                        </div>
+                      </div>
+                      <Badge variant="success">✓ Lunas</Badge>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', padding: '10px 12px', background: 'var(--dash-muted-bg)', borderRadius: '8px', fontSize: '12px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span style={{ color: 'var(--dash-text-muted)' }}>Gaji Pokok:</span>
+                        <span style={{ fontWeight: 600 }}>{formatIDR(p.base_salary)}</span>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span style={{ color: 'var(--dash-text-muted)' }}>Tunjangan Operasional:</span>
+                        <span style={{ fontWeight: 600 }}>{formatIDR(p.operational_allowance)}</span>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span style={{ color: 'var(--dash-text-muted)' }}>Bonus Supervisi:</span>
+                        <span style={{ fontWeight: 600, color: '#10b981' }}>{formatIDR(p.bonus)}</span>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '4px' }}>
+                      <div>
+                        <div style={{ fontSize: '11px', color: 'var(--dash-text-muted)' }}>Total Diterima:</div>
+                        <div style={{ fontSize: '15px', fontWeight: 800, color: '#10b981' }}>{formatIDR(p.total_amount)}</div>
+                      </div>
+                      {p.slip_url && (
+                        <a
+                          href={p.slip_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{ color: '#f97316', fontWeight: 700, fontSize: '13px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                        >
+                          <i className="ri-file-download-line" /> Unduh Slip 📄
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </CardContent>
         </Card>

@@ -433,7 +433,7 @@ export const SCurveEditor: React.FC<SCurveEditorProps> = ({
         )}
 
         {/* Responsive Matrix Table */}
-        <div style={{ overflowX: 'auto', border: '1px solid var(--dash-border)', borderRadius: '10px' }}>
+        <div className="dash-desktop-table" style={{ overflowX: 'auto', border: '1px solid var(--dash-border)', borderRadius: '10px' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px', textAlign: 'left' }}>
             <thead>
               <tr style={{ background: 'var(--dash-muted-bg)', borderBottom: '2px solid var(--dash-border)' }}>
@@ -643,6 +643,161 @@ export const SCurveEditor: React.FC<SCurveEditorProps> = ({
               })}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile Card List View (<= 768px) */}
+        <div className="dash-mobile-cards">
+          {weeks.map((w, idx) => {
+            const dev = parseFloat((w.cumulative_actual - w.cumulative_planned).toFixed(2));
+            const hasActual = w.cumulative_actual > 0 || w.actual_percentage > 0;
+            const isAddendum = w.week_number > 6;
+
+            return (
+              <div key={w.week_number} className="dash-mobile-card-item">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ fontSize: '15px', fontWeight: 800, color: 'var(--dash-text-main)' }}>
+                      Minggu {w.week_number}
+                    </span>
+                    {isAddendum && (
+                      <span
+                        style={{
+                          fontSize: '9px',
+                          background: '#fef3c7',
+                          color: '#92400e',
+                          padding: '1px 5px',
+                          borderRadius: '3px',
+                          fontWeight: 700,
+                        }}
+                      >
+                        ADD
+                      </span>
+                    )}
+                  </div>
+
+                  <select
+                    value={w.status || 'IN_PROGRESS'}
+                    onChange={(e) => handleFieldChange(idx, 'status', e.target.value)}
+                    style={{
+                      padding: '4px 8px',
+                      borderRadius: '6px',
+                      border: '1px solid var(--dash-border)',
+                      background: 'var(--dash-card-bg)',
+                      fontSize: '11.5px',
+                      fontWeight: 700,
+                    }}
+                  >
+                    <option value="COMPLETED">Completed</option>
+                    <option value="IN_PROGRESS">In Progress</option>
+                    <option value="ON_HOLD">On Hold</option>
+                  </select>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', background: 'var(--dash-muted-bg)', padding: '10px 12px', borderRadius: '8px' }}>
+                  {/* % Rencana */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '11px', color: '#2563eb', fontWeight: 700, marginBottom: '3px' }}>
+                      % Rencana (Owner)
+                    </label>
+                    {activeMode === 'owner' ? (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <input
+                          type="number"
+                          step="0.01"
+                          min="0"
+                          max="100"
+                          value={w.planned_percentage}
+                          onChange={(e) => handleFieldChange(idx, 'planned_percentage', e.target.value)}
+                          style={{
+                            width: '100%',
+                            padding: '5px 8px',
+                            borderRadius: '6px',
+                            border: '1px solid #2563eb',
+                            fontSize: '13px',
+                            fontWeight: 700,
+                            color: '#2563eb',
+                            background: 'var(--dash-card-bg)',
+                          }}
+                        />
+                        <span style={{ fontWeight: 700, color: '#2563eb' }}>%</span>
+                      </div>
+                    ) : (
+                      <div style={{ fontSize: '14px', fontWeight: 800, color: '#2563eb' }}>
+                        {w.planned_percentage}%
+                      </div>
+                    )}
+                  </div>
+
+                  {/* % Riil */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '11px', color: '#10b981', fontWeight: 700, marginBottom: '3px' }}>
+                      % Riil (Pengawas)
+                    </label>
+                    {activeMode === 'supervisor' || isOwner ? (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <input
+                          type="number"
+                          step="0.01"
+                          min="0"
+                          max="100"
+                          value={w.actual_percentage}
+                          onChange={(e) => handleFieldChange(idx, 'actual_percentage', e.target.value)}
+                          style={{
+                            width: '100%',
+                            padding: '5px 8px',
+                            borderRadius: '6px',
+                            border: '1px solid #10b981',
+                            fontSize: '13px',
+                            fontWeight: 700,
+                            color: '#10b981',
+                            background: 'var(--dash-card-bg)',
+                          }}
+                        />
+                        <span style={{ fontWeight: 700, color: '#10b981' }}>%</span>
+                      </div>
+                    ) : (
+                      <div style={{ fontSize: '14px', fontWeight: 800, color: hasActual ? '#10b981' : 'var(--dash-text-muted)' }}>
+                        {hasActual ? `${w.actual_percentage}%` : '-'}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px', padding: '0 4px' }}>
+                  <span style={{ color: 'var(--dash-text-muted)' }}>
+                    Kumulatif: <b style={{ color: '#2563eb' }}>{w.cumulative_planned}%</b> / <b style={{ color: '#10b981' }}>{hasActual ? `${w.cumulative_actual}%` : '-'}</b>
+                  </span>
+                  <span>
+                    Deviasi:{' '}
+                    {hasActual ? (
+                      <b style={{ color: dev > 0.5 ? '#10b981' : dev < -0.5 ? '#ef4444' : '#2563eb' }}>
+                        {dev > 0 ? `+${dev}%` : `${dev}%`}
+                      </b>
+                    ) : (
+                      '-'
+                    )}
+                  </span>
+                </div>
+
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Catatan progres / kendala lapangan..."
+                    value={w.notes || ''}
+                    onChange={(e) => handleFieldChange(idx, 'notes', e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '7px 10px',
+                      borderRadius: '6px',
+                      border: '1px solid var(--dash-border)',
+                      background: 'var(--dash-card-bg)',
+                      fontSize: '12px',
+                    }}
+                  />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </CardContent>
     </Card>

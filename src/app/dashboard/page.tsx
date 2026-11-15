@@ -267,7 +267,8 @@ export default async function DashboardMainPage() {
             </Link>
           </CardHeader>
           <CardContent style={{ padding: 0 }}>
-            <div className="dash-table-responsive" style={{ overflowX: 'auto' }}>
+            {/* Desktop Table View */}
+            <div className="dash-desktop-table" style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '13px' }}>
                 <thead>
                   <tr style={{ background: 'var(--dash-muted-bg)', borderBottom: '1px solid var(--dash-border)' }}>
@@ -339,6 +340,74 @@ export default async function DashboardMainPage() {
                   })}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile Card List View (<= 768px) */}
+            <div className="dash-mobile-cards">
+              {projects.length === 0 ? (
+                <div style={{ padding: '24px', textAlign: 'center', color: 'var(--dash-text-muted)' }}>
+                  Belum ada proyek aktif.
+                </div>
+              ) : (
+                projects.map((project) => {
+                  const latestProgress = project.sCurveProgress[0]?.actual_percentage || 0;
+                  return (
+                    <div key={project.id} className="dash-mobile-card-item">
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px' }}>
+                        <div>
+                          <div style={{ fontWeight: 800, fontSize: '15px', color: 'var(--dash-text-main)' }}>
+                            {project.name}
+                          </div>
+                          <div style={{ fontSize: '11px', color: 'var(--dash-text-muted)', marginTop: '2px' }}>
+                            Kategori: {project.category}
+                          </div>
+                        </div>
+                        {project.status === 'COMPLETED' ? (
+                          <Badge variant="success">SELESAI</Badge>
+                        ) : (
+                          <Badge variant="warning">ONGOING</Badge>
+                        )}
+                      </div>
+
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', padding: '10px 12px', background: 'var(--dash-muted-bg)', borderRadius: '8px', fontSize: '12px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span style={{ color: 'var(--dash-text-muted)' }}>Klien:</span>
+                          <span style={{ fontWeight: 600 }}>{project.client?.name || 'Klien Umum'}</span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span style={{ color: 'var(--dash-text-muted)' }}>Lokasi:</span>
+                          <span style={{ fontWeight: 500 }}>{project.location}</span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span style={{ color: 'var(--dash-text-muted)' }}>Pengawas:</span>
+                          <span style={{ fontWeight: 600 }}>{project.pm?.name || '-'}</span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span style={{ color: 'var(--dash-text-muted)' }}>Nilai Kontrak:</span>
+                          <span style={{ fontWeight: 800, color: '#f97316' }}>{formatIDR(project.contract_value)}</span>
+                        </div>
+                      </div>
+
+                      <div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '4px' }}>
+                          <span style={{ color: 'var(--dash-text-muted)', fontWeight: 600 }}>Progres Riil:</span>
+                          <span style={{ fontWeight: 800, color: latestProgress >= 100 ? '#10b981' : '#f97316' }}>{latestProgress}%</span>
+                        </div>
+                        <div style={{ height: '7px', background: 'var(--dash-border)', borderRadius: '999px', overflow: 'hidden' }}>
+                          <div
+                            style={{
+                              width: `${Math.min(latestProgress, 100)}%`,
+                              height: '100%',
+                              background: latestProgress >= 100 ? '#10b981' : '#f97316',
+                              transition: 'width 0.3s ease',
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
             </div>
           </CardContent>
         </Card>

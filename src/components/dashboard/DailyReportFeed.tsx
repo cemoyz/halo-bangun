@@ -289,7 +289,8 @@ export const DailyReportFeed: React.FC<DailyReportFeedProps> = ({
                       <span>A. Rincian Fisik Pengerjaan Hari Ini</span>
                     </div>
 
-                    <div style={{ overflowX: 'auto', border: '1px solid var(--dash-border)', borderRadius: '8px' }}>
+                    {/* Desktop Table View */}
+                    <div className="dash-desktop-table" style={{ overflowX: 'auto', border: '1px solid var(--dash-border)', borderRadius: '8px' }}>
                       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px', textAlign: 'left' }}>
                         <thead>
                           <tr style={{ background: 'var(--dash-muted-bg)', borderBottom: '1px solid var(--dash-border)' }}>
@@ -345,6 +346,46 @@ export const DailyReportFeed: React.FC<DailyReportFeedProps> = ({
                           ))}
                         </tbody>
                       </table>
+                    </div>
+
+                    {/* Mobile Card List View (<= 768px) */}
+                    <div className="dash-mobile-cards">
+                      {report.items.map((item, iIdx) => (
+                        <div key={item.id || iIdx} className="dash-mobile-card-item">
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px' }}>
+                            <div style={{ fontWeight: 700, fontSize: '13px', color: 'var(--dash-text-main)' }}>
+                              {item.task_name}
+                            </div>
+                            <Badge
+                              variant={
+                                item.status === 'COMPLETED'
+                                  ? 'success'
+                                  : item.status === 'ON_HOLD'
+                                  ? 'danger'
+                                  : 'warning'
+                              }
+                              style={{ fontSize: '10px' }}
+                            >
+                              {item.status === 'COMPLETED'
+                                ? '✓ Selesai'
+                                : item.status === 'ON_HOLD'
+                                ? 'Tertunda'
+                                : 'Sedang Berjalan'}
+                            </Badge>
+                          </div>
+
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '11.5px', color: 'var(--dash-text-muted)' }}>
+                            <span>Kategori: <b>{item.category || 'Konstruksi'}</b></span>
+                            <span>Volume: <b>{item.volume || '-'}</b></span>
+                          </div>
+
+                          {item.notes && (
+                            <div style={{ fontSize: '11px', color: 'var(--dash-text-muted)', background: 'var(--dash-muted-bg)', padding: '6px 8px', borderRadius: '6px' }}>
+                              Catatan: {item.notes}
+                            </div>
+                          )}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}

@@ -529,7 +529,7 @@ export const PaymentScheduleTable: React.FC<PaymentScheduleTableProps> = ({
           </div>
 
           {/* Mobile Card List View (< 768px) */}
-          <div className="dash-mobile-cards d-none">
+          <div className="dash-mobile-cards">
             {payments.length === 0 ? (
               <div style={{ padding: '24px', textAlign: 'center', color: 'var(--dash-text-muted)' }}>
                 Belum ada jadwal termin tagihan untuk proyek ini.

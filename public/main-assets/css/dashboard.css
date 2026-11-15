@@ -1163,6 +1163,80 @@ button.dash-btn-danger {
     border-color: var(--dash-text-muted);
   }
 
+  /* Universal Table-to-Card Responsive Transformation (<= 768px) */
+  .dash-table-to-cards {
+    overflow: visible !important;
+    border: none !important;
+    background: transparent !important;
+  }
+
+  .dash-table-to-cards table,
+  table.dash-card-table {
+    display: block !important;
+    width: 100% !important;
+    border: none !important;
+  }
+
+  .dash-table-to-cards thead,
+  table.dash-card-table thead {
+    display: none !important;
+  }
+
+  .dash-table-to-cards tbody,
+  table.dash-card-table tbody {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .dash-table-to-cards tr,
+  table.dash-card-table tr {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    background: var(--dash-card-bg) !important;
+    border: 1px solid var(--dash-border) !important;
+    border-radius: 12px !important;
+    padding: 14px 16px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin-bottom: 0 !important;
+  }
+
+  .dash-table-to-cards td,
+  table.dash-card-table td {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 7px 0 !important;
+    border: none !important;
+    border-bottom: 1px dashed var(--dash-border) !important;
+    font-size: 13px !important;
+    text-align: right !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .dash-table-to-cards td:last-child,
+  table.dash-card-table td:last-child {
+    border-bottom: none !important;
+    padding-top: 10px !important;
+    justify-content: flex-end !important;
+  }
+
+  .dash-table-to-cards td[data-label]::before,
+  table.dash-card-table td[data-label]::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: var(--dash-text-muted);
+    font-size: 12px;
+    text-align: left;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+
   .dash-content {
     padding: 16px 12px !important;
   }

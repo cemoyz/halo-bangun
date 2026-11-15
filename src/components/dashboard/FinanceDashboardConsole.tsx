@@ -438,7 +438,8 @@ export default function FinanceDashboardConsole({
             <Badge variant="info">Otomatis Terintegrasi</Badge>
           </CardHeader>
           <CardContent style={{ padding: 0 }}>
-            <div style={{ overflowX: 'auto' }}>
+            {/* Desktop Table View */}
+            <div className="dash-desktop-table" style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '13px' }}>
                 <thead>
                   <tr style={{ background: 'var(--dash-muted-bg)', borderBottom: '1px solid var(--dash-border)' }}>
@@ -498,6 +499,77 @@ export default function FinanceDashboardConsole({
                   })}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile Card List View (<= 768px) */}
+            <div className="dash-mobile-cards">
+              {projects.length === 0 ? (
+                <div style={{ padding: '24px', textAlign: 'center', color: 'var(--dash-text-muted)' }}>
+                  Belum ada data anggaran proyek.
+                </div>
+              ) : (
+                projects.map((p) => {
+                  const approvedAddendumsTotal = p.addendums
+                    .filter((a) => a.status === 'APPROVED')
+                    .reduce((sum, a) => sum + a.cost_difference, 0);
+
+                  const totalRevisedBudget = p.contract_value + approvedAddendumsTotal;
+                  const totalMaterials = p.materialPurchases.reduce((sum, m) => sum + m.total_price, 0);
+                  const totalPayrolls = p.payrolls.reduce((sum, pay) => sum + pay.total_amount, 0);
+                  const realCostTotal = totalMaterials + totalPayrolls;
+
+                  const variance = totalRevisedBudget - realCostTotal;
+                  const isSurplus = variance >= 0;
+
+                  return (
+                    <div key={p.id} className="dash-mobile-card-item">
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px' }}>
+                        <div>
+                          <div style={{ fontWeight: 800, fontSize: '15px', color: 'var(--dash-text-main)' }}>
+                            {p.name}
+                          </div>
+                          <div style={{ fontSize: '11px', color: 'var(--dash-text-muted)', marginTop: '2px' }}>
+                            {p.location}
+                          </div>
+                        </div>
+                        {isSurplus ? (
+                          <Badge variant="success">✓ Efisien</Badge>
+                        ) : (
+                          <Badge variant="danger">⚠️ Over Budget</Badge>
+                        )}
+                      </div>
+
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', padding: '10px 12px', background: 'var(--dash-muted-bg)', borderRadius: '8px', fontSize: '12px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span style={{ color: 'var(--dash-text-muted)' }}>RAB Dasar:</span>
+                          <span style={{ fontWeight: 600 }}>{formatIDR(p.contract_value)}</span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span style={{ color: 'var(--dash-text-muted)' }}>Addendum Approved:</span>
+                          <span style={{ fontWeight: 600, color: approvedAddendumsTotal > 0 ? '#10b981' : 'inherit' }}>
+                            {approvedAddendumsTotal > 0 ? `+ ${formatIDR(approvedAddendumsTotal)}` : 'Rp 0'}
+                          </span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span style={{ color: 'var(--dash-text-muted)' }}>Total Anggaran RAB:</span>
+                          <span style={{ fontWeight: 800, color: '#f97316' }}>{formatIDR(totalRevisedBudget)}</span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span style={{ color: 'var(--dash-text-muted)' }}>Pengeluaran Riil:</span>
+                          <span style={{ fontWeight: 700, color: '#ef4444' }}>{formatIDR(realCostTotal)}</span>
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '13px', paddingTop: '2px' }}>
+                        <span style={{ color: 'var(--dash-text-muted)', fontWeight: 600 }}>Sisa Anggaran:</span>
+                        <span style={{ fontWeight: 800, fontSize: '14px', color: isSurplus ? '#10b981' : '#ef4444' }}>
+                          {isSurplus ? `+ ${formatIDR(variance)}` : `- ${formatIDR(Math.abs(variance))}`}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
             </div>
           </CardContent>
         </Card>
@@ -939,7 +1011,8 @@ export default function FinanceDashboardConsole({
             <CardTitle icon="ri-shopping-cart-line">Verifikasi Pembelian Material & Nota Lapangan</CardTitle>
           </CardHeader>
           <CardContent style={{ padding: 0 }}>
-            <div style={{ overflowX: 'auto' }}>
+            {/* Desktop Table View */}
+            <div className="dash-desktop-table" style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '12.5px' }}>
                 <thead>
                   <tr style={{ background: 'var(--dash-muted-bg)', borderBottom: '1px solid var(--dash-border)' }}>
@@ -986,6 +1059,63 @@ export default function FinanceDashboardConsole({
                   ))}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile Card List View (<= 768px) */}
+            <div className="dash-mobile-cards">
+              {materials.length === 0 ? (
+                <div style={{ padding: '24px', textAlign: 'center', color: 'var(--dash-text-muted)' }}>
+                  Belum ada catatan pembelian material.
+                </div>
+              ) : (
+                materials.map((m) => (
+                  <div key={m.id} className="dash-mobile-card-item">
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px' }}>
+                      <div>
+                        <div style={{ fontSize: '11px', color: 'var(--dash-text-muted)', fontWeight: 700 }}>
+                          {m.project.name}
+                        </div>
+                        <div style={{ fontSize: '15px', fontWeight: 800, color: 'var(--dash-text-main)', marginTop: '2px' }}>
+                          {m.item_name}
+                        </div>
+                      </div>
+                      <Badge variant="neutral">{m.input_by_role}</Badge>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', padding: '10px 12px', background: 'var(--dash-muted-bg)', borderRadius: '8px', fontSize: '12px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span style={{ color: 'var(--dash-text-muted)' }}>Kuantitas:</span>
+                        <span style={{ fontWeight: 600 }}>{m.quantity}</span>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span style={{ color: 'var(--dash-text-muted)' }}>Toko:</span>
+                        <span style={{ fontWeight: 500 }}>
+                          {m.store_name} {m.store_wa && <span style={{ color: '#10b981' }}>({m.store_wa})</span>}
+                        </span>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span style={{ color: 'var(--dash-text-muted)' }}>Total Biaya:</span>
+                        <span style={{ fontWeight: 800, color: '#f97316' }}>{formatIDR(m.total_price)}</span>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', paddingTop: '4px' }}>
+                      {m.receipt_url ? (
+                        <a
+                          href={m.receipt_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{ color: '#f97316', fontWeight: 700, fontSize: '13px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                        >
+                          <i className="ri-file-list-3-line" /> Lihat Foto Nota ↗
+                        </a>
+                      ) : (
+                        <span style={{ fontSize: '12px', color: 'var(--dash-text-muted)' }}>Tidak ada foto nota</span>
+                      )}
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </CardContent>
         </Card>
@@ -1151,7 +1281,8 @@ export default function FinanceDashboardConsole({
               <CardTitle icon="ri-file-list-3-line">Daftar Payroll Pegawai</CardTitle>
             </CardHeader>
             <CardContent style={{ padding: 0 }}>
-              <div style={{ overflowX: 'auto', maxHeight: '520px' }}>
+              {/* Desktop Table View */}
+              <div className="dash-desktop-table" style={{ overflowX: 'auto', maxHeight: '520px' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '12.5px' }}>
                   <thead>
                     <tr style={{ background: 'var(--dash-muted-bg)', borderBottom: '1px solid var(--dash-border)' }}>
@@ -1190,6 +1321,53 @@ export default function FinanceDashboardConsole({
                     ))}
                   </tbody>
                 </table>
+              </div>
+
+              {/* Mobile Card List View (<= 768px) */}
+              <div className="dash-mobile-cards">
+                {payrolls.length === 0 ? (
+                  <div style={{ padding: '24px', textAlign: 'center', color: 'var(--dash-text-muted)' }}>
+                    Belum ada slip gaji pegawai.
+                  </div>
+                ) : (
+                  payrolls.map((py) => (
+                    <div key={py.id} className="dash-mobile-card-item">
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px' }}>
+                        <div>
+                          <div style={{ fontSize: '15px', fontWeight: 800, color: 'var(--dash-text-main)' }}>
+                            {py.user.name}
+                          </div>
+                          <div style={{ fontSize: '11px', color: 'var(--dash-text-muted)', marginTop: '2px' }}>
+                            Periode: {py.period}
+                          </div>
+                        </div>
+                        <Badge variant="neutral">{py.user.role}</Badge>
+                      </div>
+
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 12px', background: 'var(--dash-muted-bg)', borderRadius: '8px' }}>
+                        <span style={{ fontSize: '12px', color: 'var(--dash-text-muted)' }}>Total Diterima:</span>
+                        <span style={{ fontSize: '15px', fontWeight: 800, color: '#10b981' }}>
+                          {formatIDR(py.total_amount)}
+                        </span>
+                      </div>
+
+                      <div style={{ display: 'flex', justifyContent: 'flex-end', paddingTop: '2px' }}>
+                        {py.slip_url ? (
+                          <a
+                            href={py.slip_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{ color: '#f97316', fontWeight: 700, fontSize: '13px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                          >
+                            <i className="ri-file-download-line" /> Unduh Dokumen Slip Gaji 📄
+                          </a>
+                        ) : (
+                          <span style={{ fontSize: '12px', color: 'var(--dash-text-muted)' }}>Belum ada berkas slip</span>
+                        )}
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </CardContent>
           </Card>
