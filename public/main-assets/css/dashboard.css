@@ -1447,6 +1447,85 @@ button.dash-btn-danger {
   }
 }
 
+/* ============================================================
+   Responsive Uniform Tab Grid (1 uniform size, 1 or 2 cols on mobile)
+   ============================================================ */
+.dash-tabs-responsive-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
+  gap: 8px !important;
+  width: 100% !important;
+  margin-bottom: 20px !important;
+  overflow: visible !important;
+}
+
+.dash-tabs-responsive-grid .dash-tab-btn {
+  display: flex !important;
+  align-items: center !important;
+  justifyContent: center !important;
+  text-align: center !important;
+  width: 100% !important;
+  min-height: 44px !important;
+  padding: 10px 12px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+  box-sizing: border-box !important;
+  gap: 6px !important;
+  transition: all 0.15s ease !important;
+  white-space: normal !important;
+  line-height: 1.25 !important;
+}
+
+.dash-tabs-responsive-grid .dash-tab-btn span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Tablet & Mobile Screens (<= 991px and <= 768px): 2 uniform columns */
+@media (max-width: 991px) {
+  .dash-tabs-responsive-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+  .dash-tabs-responsive-grid .dash-tab-btn {
+    font-size: 12px !important;
+    padding: 10px 8px !important;
+    min-height: 44px !important;
+  }
+}
+
+/* Small Smartphone Screens (<= 440px): 1 uniform column so all tabs are visible full-width */
+@media (max-width: 440px) {
+  .dash-tabs-responsive-grid {
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+  .dash-tabs-responsive-grid .dash-tab-btn {
+    font-size: 13px !important;
+    padding: 11px 14px !important;
+    min-height: 44px !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+}
+
+.mandor-tabs-responsive {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  background: var(--dash-muted-bg);
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--dash-border);
+}
+@media (max-width: 640px) {
+  .mandor-tabs-responsive {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 
 
 

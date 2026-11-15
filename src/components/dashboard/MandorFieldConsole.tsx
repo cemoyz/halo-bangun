@@ -299,17 +299,7 @@ export default function MandorFieldConsole({
       )}
 
       {/* Main Field Tabs */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr',
-          gap: '8px',
-          background: 'var(--dash-muted-bg)',
-          padding: '4px',
-          borderRadius: '12px',
-          border: '1px solid var(--dash-border)',
-        }}
-      >
+      <div className="mandor-tabs-responsive">
         <button
           onClick={() => setActiveTab('photos')}
           style={{

@@ -395,92 +395,37 @@ export default function DocumentsConsole({
       </div>
 
       {/* Tabs Navigation (Hidden on Print) */}
-      <div
-        className="no-print"
-        style={{
-          display: 'flex',
-          gap: '8px',
-          borderBottom: '2px solid var(--dash-border)',
-          marginBottom: '24px',
-          overflowX: 'auto',
-          paddingBottom: '4px',
-        }}
-      >
-        <button
-          onClick={() => setActiveTab('bast')}
-          style={{
-            padding: '10px 18px',
-            borderRadius: '8px 8px 0 0',
-            border: 'none',
-            background: activeTab === 'bast' ? '#f97316' : 'transparent',
-            color: activeTab === 'bast' ? '#fff' : 'var(--dash-text-muted)',
-            fontWeight: 700,
-            fontSize: '13px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-          }}
-        >
-          <i className="ri-file-shield-line"></i> 1. Berita Acara Serah Terima (BAST)
-        </button>
-
-        <button
-          onClick={() => setActiveTab('warranty')}
-          style={{
-            padding: '10px 18px',
-            borderRadius: '8px 8px 0 0',
-            border: 'none',
-            background: activeTab === 'warranty' ? '#f97316' : 'transparent',
-            color: activeTab === 'warranty' ? '#fff' : 'var(--dash-text-muted)',
-            fontWeight: 700,
-            fontSize: '13px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-          }}
-        >
-          <i className="ri-tools-line"></i> 2. Form Garansi Retensi (60 Hari)
-        </button>
-
-        <button
-          onClick={() => setActiveTab('spkpr')}
-          style={{
-            padding: '10px 18px',
-            borderRadius: '8px 8px 0 0',
-            border: 'none',
-            background: activeTab === 'spkpr' ? '#f97316' : 'transparent',
-            color: activeTab === 'spkpr' ? '#fff' : 'var(--dash-text-muted)',
-            fontWeight: 700,
-            fontSize: '13px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-          }}
-        >
-          <i className="ri-draft-line"></i> 3. Surat Perjanjian Kerja (SPKPR)
-        </button>
-
-        <button
-          onClick={() => setActiveTab('slip_gaji')}
-          style={{
-            padding: '10px 18px',
-            borderRadius: '8px 8px 0 0',
-            border: 'none',
-            background: activeTab === 'slip_gaji' ? '#f97316' : 'transparent',
-            color: activeTab === 'slip_gaji' ? '#fff' : 'var(--dash-text-muted)',
-            fontWeight: 700,
-            fontSize: '13px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-          }}
-        >
-          <i className="ri-money-dollar-circle-line"></i> 4. Slip Gaji PT. AIG (Resmi)
-        </button>
+      <div className="no-print dash-tabs-responsive-grid">
+        {[
+          { key: 'bast', label: '1. Berita Acara Serah Terima (BAST)', icon: 'ri-file-shield-line' },
+          { key: 'warranty', label: '2. Form Garansi Retensi (60 Hari)', icon: 'ri-tools-line' },
+          { key: 'spkpr', label: '3. Surat Perjanjian Kerja (SPKPR)', icon: 'ri-draft-line' },
+          { key: 'slip_gaji', label: '4. Slip Gaji PT. AIG (Resmi)', icon: 'ri-money-dollar-circle-line' },
+        ].map((tab) => {
+          const isActive = activeTab === tab.key;
+          return (
+            <button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key as any)}
+              className="dash-tab-btn"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                borderColor: isActive ? '#f97316' : 'var(--dash-border)',
+                background: isActive ? '#f97316' : 'var(--dash-card-bg)',
+                color: isActive ? '#ffffff' : 'var(--dash-text-muted)',
+                fontWeight: isActive ? 700 : 500,
+                cursor: 'pointer',
+                transition: 'all 0.15s ease',
+              }}
+            >
+              <i className={tab.icon} style={{ fontSize: '15px', flexShrink: 0 }} />
+              <span style={{ flex: 1, textAlign: 'center' }}>{tab.label}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* ======================================================== */}

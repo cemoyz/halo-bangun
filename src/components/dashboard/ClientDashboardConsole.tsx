@@ -296,16 +296,7 @@ export default function ClientDashboardConsole({ project, allProjects = [], user
       </div>
 
       {/* Tabs Bar */}
-      <div
-        className="dash-tabs-scroll"
-        style={{
-          display: 'flex',
-          gap: '8px',
-          overflowX: 'auto',
-          paddingBottom: '4px',
-          WebkitOverflowScrolling: 'touch',
-        }}
-      >
+      <div className="dash-tabs-responsive-grid">
         {[
           { key: 'monitor', label: 'Live Monitor (CCTV & Kurva S)', icon: 'ri-dashboard-line' },
           { key: 'documents', label: 'Dokumen Proyek & BAST', icon: 'ri-file-text-line' },
@@ -321,34 +312,32 @@ export default function ClientDashboardConsole({ project, allProjects = [], user
                 setActiveTab(tab.key as any);
                 setStatusMsg(null);
               }}
+              className="dash-tab-btn"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
+                justifyContent: 'center',
                 gap: '8px',
-                padding: '9px 16px',
-                borderRadius: '10px',
-                border: '1px solid',
                 borderColor: isActive ? '#f97316' : 'var(--dash-border)',
                 background: isActive ? '#f97316' : 'var(--dash-card-bg)',
                 color: isActive ? '#ffffff' : 'var(--dash-text-muted)',
-                fontSize: '13px',
                 fontWeight: isActive ? 700 : 500,
                 cursor: 'pointer',
-                whiteSpace: 'nowrap',
                 transition: 'all 0.15s ease',
               }}
             >
-              <i className={tab.icon} />
-              <span>{tab.label}</span>
+              <i className={tab.icon} style={{ fontSize: '15px', flexShrink: 0 }} />
+              <span style={{ flex: 1, textAlign: 'center' }}>{tab.label}</span>
               {typeof tab.count === 'number' && tab.count > 0 && (
                 <span
                   style={{
-                    background: '#ef4444',
+                    background: isActive ? 'rgba(255,255,255,0.25)' : '#ef4444',
                     color: '#fff',
                     fontSize: '11px',
-                    padding: '1px 6px',
+                    padding: '2px 7px',
                     borderRadius: '999px',
                     fontWeight: 800,
+                    flexShrink: 0,
                   }}
                 >
                   {tab.count}
